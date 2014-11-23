@@ -10,17 +10,16 @@ using glm::vec3;
 
 #include "Component.h"
 
-
-class Camera : public Component
+class Camera :public Component
 {
 public:
 	Camera();
 	~Camera();
 	void update();
 	void SetLook(float x, float y, float z);
-	void SetUp(float x, float y, float z);
-	void setNearClip(float nearClip);
-	void setFarClip(float farClip);
+	void setUp(float x, float y, float z);
+	void setNearClip(float nearclip);
+	void setFarClip(float farclip);
 	void setFOV(float FOV);
 	void setAspectRatio(float ratio);
 	mat4& getView();

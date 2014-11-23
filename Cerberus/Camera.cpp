@@ -1,6 +1,6 @@
-//TO DO: Add includes for GameObject.h and Transform.h, as well as include their functionality
 #include "Camera.h"
-
+#include "GameObject.h"
+#include "Transform.h"
 
 Camera::Camera()
 {
@@ -22,29 +22,31 @@ Camera::~Camera()
 
 void Camera::update()
 {
-	//Inteaction with GameObject and Transform, thus those header files and sourcce files
-	//must first be created.
+	vec3 position = m_Parent->getTransform()->getPosition();
+
+	m_Projection = glm::perspective(m_FOV, m_AspectRatio, m_NearClip, m_FarClip);
+	m_View = glm::lookAt(position, m_LookAt, m_Up);
 }
 
 void Camera::SetLook(float x, float y, float z)
 {
 	m_LookAt = vec3(x, y, z);
-
 }
 
-void Camera::SetUp(float x, float y, float z)
+void Camera::setUp(float x, float y, float z)
 {
 	m_Up = vec3(x, y, z);
 }
 
-void Camera::setNearClip(float nearClip)
+
+void Camera::setNearClip(float nearclip)
 {
-	m_NearClip = nearClip;
+	m_NearClip = nearclip;
 }
 
-void Camera::setFarClip(float farClip)
+void Camera::setFarClip(float farclip)
 {
-	m_FarClip = farClip;
+	m_FarClip = farclip;
 }
 
 void Camera::setFOV(float FOV)
