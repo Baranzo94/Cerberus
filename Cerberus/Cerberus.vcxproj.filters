@@ -66,4 +66,10 @@
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="assets\shaders\simpleFS.glsl" />
+    <None Include="assets\shaders\simpleVS.glsl" />
+    <None Include="assets\shaders\textureFS.glsl" />
+    <None Include="assets\shaders\textureVS.glsl" />
+  </ItemGroup>
 </Project>
