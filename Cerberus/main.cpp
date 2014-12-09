@@ -1,20 +1,20 @@
 #include <iostream>
-#include "Vertex.h"
+//#include "Vertex.h"
 #include <SDL.h>
 #include<gl/glew.h>
 #include <SDL_opengl.h>
 #include<gl/GLU.h> 
-#include "Shader.h"
+//#include "Shader.h"
 //#include "Texture.h"
 //maths headers
 #include <glm/glm.hpp>
 #include <Windows.h>
 #include <vector>
-#include "GameObject.h"
-#include "Transform.h"
-#include "Mesh.h"
-#include "Material.h"
-#include "Camera.h"
+//#include "GameObject.h"
+//#include "Transform.h"
+//#include "Mesh.h"
+//#include "Material.h"
+//#include "Camera.h"
 using glm::mat4;
 using glm::vec3;
 
@@ -37,65 +37,14 @@ SDL_Window* window;
 
 SDL_GLContext glcontext = NULL;
 
-std::vector<GameObject*> displayList;
+//std::vector<GameObject*> displayList;
 
-GameObject* mainCamera;
+//GameObject* mainCamera;
 
 
 mat4 viewMatrix;
 mat4 projMatrix;
 mat4 worldMatrix;
-
-GLuint triangleEBO;
-
-Vertex triangleData[] = {
-
-	//Front
-		{ vec3{ -0.5f, 0.5f, 0.5f }, vec2(0.0f, 0.0f), vec4{ 1.0f, 0.0f, 0.0f, 1.0f } },// Top Left
-
-		{ vec3{ -0.5f, -0.5f, 0.5f }, vec2(0.0f, 1.0f), vec4{ 1.0f, 0.0f, 0.0f, 1.0f } },// Bottom Left
-
-		{ vec3{ 0.5f, -0.5f, 0.5f }, vec2(1.0f, 1.0f), vec4{ 1.0f, 0.0f, 0.0f, 1.0f } }, //Bottom Right
-
-		{ vec3{ 0.5f, 0.5f, 0.5f }, vec2(1.0f, 0.0f), vec4{ 1.0f, 0.0f, 0.0f, 1.0f } },// Top Right
-
-
-		//back
-		{ vec3{ -0.5f, 0.5f, -0.5f }, vec2(0.0f, 0.0f), vec4{ 1.0f, 0.0f, 0.0f, 1.0f } },// Top Left
-
-		{ vec3{ -0.5f, -0.5f, -0.5f }, vec2(0.0f, 1.0f), vec4{ 1.0f, 0.0f, 0.0f, 1.0f } },// Bottom Left
-
-		{ vec3{ 0.5f, -0.5f, -0.5f }, vec2(1.0f, 1.0f), vec4{ 1.0f, 0.0f, 0.0f, 1.0f } }, //Bottom Right
-
-		{ vec3{ 0.5f, 0.5f, -0.5f }, vec2(1.0f, 0.0f), vec4{ 1.0f, 0.0f, 0.0f, 1.0f } },// Top Right
-
-};
-
-GLuint indices[] = {
-	//front
-	0, 1, 2,
-	0, 3, 2,
-
-	//left
-	4, 5, 1,
-	4, 1, 0,
-
-	//right
-	3, 7, 2,
-	7, 6, 2,
-
-	//bottom
-	1, 5, 2,
-	6, 2, 1,
-
-	//top
-	5, 0, 7,
-	5, 7, 3,
-
-	//back
-	4, 5, 6,
-	4, 7, 6
-};
 
 const int WINDOW_WIDTH = 640;
 const int WINDOW_HEIGHT = 480;
@@ -123,7 +72,7 @@ void InitWindow(int width, int height, bool fullscreen){
 }
 
 void CleanUp()
-{
+{/*
 	auto iter = displayList.begin();
 	while (iter != displayList.end())
 	{
@@ -143,7 +92,7 @@ void CleanUp()
 	SDL_GL_DeleteContext(glcontext); 
 	SDL_DestroyWindow(window);
 	SDL_Quit();
-	
+	*/
 }
 
 void initOpenGL() //This function initialises OpenGL
@@ -216,7 +165,7 @@ void setViewport(int width, int height){
 }
 
 void Initialise()
-{
+{/*
 	mainCamera = new GameObject();
 	mainCamera->setName("MainCamera");
 
@@ -259,13 +208,13 @@ void Initialise()
 
 	mesh->copyVertexData(8, sizeof(Vertex), (void**)triangleData);
 	mesh->copyIndexData(36, sizeof(int), (void**)indices);
-	
+	*/
 }
 
 //This function draws objects to be rendered.
 void render()
 {
-	glClearColor(0.0f, 0.0f, 0.0f, 0.0f); // This sets the clear colour AKA the background.
+	/*glClearColor(0.0f, 0.0f, 0.0f, 0.0f); // This sets the clear colour AKA the background.
 	glClearDepth(1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -293,7 +242,7 @@ void render()
 	}
 
 	SDL_GL_SwapWindow(window); //VERY IMPORTANT!!!! Used to swap the back and front buffer.
-	
+	*/
 }
 
 
@@ -302,10 +251,10 @@ void render()
 
 void update()
 {
-	for (auto iter = displayList.begin(); iter != displayList.end(); iter++)
-	{
-		(*iter)->update();
-	}
+	//for (auto iter = displayList.begin(); iter != displayList.end(); iter++)
+	//{
+	//	(*iter)->update();
+	//}
 }
 
 int main(int argc, char* arg[]){
