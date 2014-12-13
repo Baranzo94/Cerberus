@@ -21,6 +21,7 @@ void Component::update()
 {
 
 }
+<<<<<<< HEAD
 
 void Component::render()
 {
@@ -30,6 +31,17 @@ void Component::render()
 void Component::destroy()
 {
 
+=======
+
+void Component::render()
+{
+
+}
+
+void Component::destroy()
+{
+
+>>>>>>> origin/Framework
 }
 
 const std::string& Component::getType()
@@ -45,4 +57,9 @@ bool Component::isActive()
 void Component::toggleActive()
 {
 	m_Active = !m_Active;
+}
+
+void Component::setParent(GameObject *object)
+{
+	m_Parent = object;
 }
