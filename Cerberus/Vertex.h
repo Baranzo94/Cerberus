@@ -8,7 +8,9 @@ using glm::vec2;
 struct Vertex
 {
 	vec3 position;
+	vec3 normal;
 	vec2 tecCoords;
 	vec4 colours;
+	
 };
 #endif

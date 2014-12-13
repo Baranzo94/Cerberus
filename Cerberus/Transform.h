@@ -8,6 +8,9 @@
 #include <iostream>
 #include <string>
 #include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
+
 using glm::mat4;
 using glm::vec3;
 
@@ -16,13 +19,17 @@ class Transform : public Component
 public:
 	Transform();
 	~Transform();
+
 	void Update();
-	vec3& getPosition();
+
 	void setPosition(float x, float y, float z);
-	vec3& getScale();
-	void setScale(float x, float y, float z);
-	vec3& getRotation();
 	void setRotation(float x, float y, float z);
+	void setScale(float x, float y, float z);
+
+	vec3& getPosition();
+	vec3& getScale();
+	vec3& getRotation();
+	//mat4& getModel();
 	mat4& getModelMatrix();
 protected:
 private:

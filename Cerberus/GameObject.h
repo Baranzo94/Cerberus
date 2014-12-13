@@ -19,24 +19,33 @@ class GameObject{
 public:
 	GameObject();
 	~GameObject();
+
 	void init();
 	void update();
 	void render();
 	void destroy();
+
 	const std::string& getName();
 	void setName(const std::string& name);
 	void addComponent(Component * component);
+
 	void setTransform(Transform * transform);
 	void setMesh(Mesh * mesh);
 	void setMaterial(Material * material);
 	void setCamera(Camera * camera);
+		void addChild(GameObject * obj);
+		void setParent(GameObject* parent);
+
+	GameObject* getParent();
+
 	Transform * getTransform();
+
 	Mesh *getMesh();
 	Material *getMaterial();
 	Camera * getCamera();
-	GameObject* getParent();
-	void setParent(GameObject* parent);
-	void addChild(GameObject* child);
+	
+	
+	//void addChild(GameObject* child);
 	int getChildCount();
 	GameObject* getChild(int index);
 protected:

@@ -48,7 +48,7 @@ mat4 worldMatrix;
 
 GLuint triangleEBO;
 
-Vertex triangleData[] = {
+/*Vertex triangleData[] = {
 
 	//Front
 		{ vec3{ -0.5f, 0.5f, 0.5f }, vec2(0.0f, 0.0f), vec4{ 1.0f, 0.0f, 0.0f, 1.0f } },// Top Left
@@ -96,7 +96,7 @@ GLuint indices[] = {
 	4, 5, 6,
 	4, 7, 6
 };
-
+*/
 const int WINDOW_WIDTH = 640;
 const int WINDOW_HEIGHT = 480;
 
@@ -257,8 +257,8 @@ void Initialise()
 		(*iter)->init();
 	}
 
-	mesh->copyVertexData(8, sizeof(Vertex), (void**)triangleData);
-	mesh->copyIndexData(36, sizeof(int), (void**)indices);
+	//mesh->copyVertexData(8, sizeof(Vertex), (void**)triangleData);
+	//mesh->copyIndexData(36, sizeof(int), (void**)indices);
 	
 }
 

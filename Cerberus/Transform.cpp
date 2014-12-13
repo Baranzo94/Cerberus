@@ -1,6 +1,8 @@
 #include "Transform.h"
+#include "GameObject.h"
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
+
 using glm::mat4;
 using glm::vec3;
 Transform::Transform()
@@ -19,8 +21,6 @@ Transform::~Transform()
 
 void Transform::Update()
 {
-	if (m_Active == true)
-	{
 		mat4 translate = glm::translate(translate, m_Position);
 		mat4 scale = glm::scale(scale, m_Scale);
 
@@ -28,9 +28,13 @@ void Transform::Update()
 		mat4 rotationY = glm::rotate(rotationY, m_Rotation.y, vec3(0.0f, 1.0f, 0.0f));
 		mat4 rotationZ = glm::rotate(rotationZ, m_Rotation.z, vec3(0.0f, 0.0f, 1.0f));
 		mat4 rotation = rotationX*rotationY*rotationZ;
-		m_Model = translate*rotation*scale;
-	}
 
+		m_Model = translate*rotation*scale;
+	
+	if (m_Parent->getParent())
+	{
+		m_Model *= m_Parent->getTransform()->getModelMatrix();
+	}
 }
 
 vec3& Transform::getPosition()
