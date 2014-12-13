@@ -22,19 +22,11 @@ Camera::~Camera()
 
 void Camera::update()
 {
-<<<<<<< HEAD
-	//get the position from the transform
-	vec3 position = m_Parent->getTransform()->getPosition();
-
-	m_Projection = glm::perspective(m_FOV, m_AspectRatio, m_NearClip, m_FarClip);
-	m_View = glm::lookAt(position, m_LookAt, m_Up);
-=======
 	//Inteaction with GameObject and Transform, thus those header files and sourcce files
 	//must first be created.
->>>>>>> origin/Framework
 }
 
-void Camera::setLook(float x, float y, float z)
+void Camera::SetLook(float x, float y, float z)
 {
 	m_LookAt = vec3(x, y, z);
 
@@ -45,17 +37,6 @@ void Camera::SetUp(float x, float y, float z)
 	m_Up = vec3(x, y, z);
 }
 
-<<<<<<< HEAD
-
-void Camera::setNearClip(float near)
-{
-	m_NearClip = near;
-}
-
-void Camera::setFarClip(float far)
-{
-	m_FarClip = far;
-=======
 void Camera::setNearClip(float nearClip)
 {
 	m_NearClip = nearClip;
@@ -64,7 +45,6 @@ void Camera::setNearClip(float nearClip)
 void Camera::setFarClip(float farClip)
 {
 	m_FarClip = farClip;
->>>>>>> origin/Framework
 }
 
 void Camera::setFOV(float FOV)
