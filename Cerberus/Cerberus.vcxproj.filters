@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="shaders">
+      <UniqueIdentifier>{08bd63b5-2909-4f51-9f64-07c0fc804013}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp">
@@ -67,9 +70,17 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="assets\shaders\simpleFS.glsl" />
-    <None Include="assets\shaders\simpleVS.glsl" />
-    <None Include="assets\shaders\textureFS.glsl" />
-    <None Include="assets\shaders\textureVS.glsl" />
+    <None Include="assets\shaders\textureVS.glsl">
+      <Filter>shaders</Filter>
+    </None>
+    <None Include="assets\shaders\textureFS.glsl">
+      <Filter>shaders</Filter>
+    </None>
+    <None Include="assets\shaders\simpleVS.glsl">
+      <Filter>shaders</Filter>
+    </None>
+    <None Include="assets\shaders\simpleFS.glsl">
+      <Filter>shaders</Filter>
+    </None>
   </ItemGroup>
 </Project>

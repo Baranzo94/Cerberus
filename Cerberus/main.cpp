@@ -23,13 +23,13 @@ using glm::vec3;
 #include <glm/gtc/type_ptr.hpp>
 #ifdef _DEBUG && WIN32
 const std::string ASSET_PATH = "assets/";
-
+const std::string TEXTURE_PATH = "textures/";
+const std::string SHADER_PATH = "shaders/";
 #else
 
 const std::string ASSET_PATH = "assets";
 #endif
-const std::string TEXTURE_PATH = "textures/";
-const std::string SHADER_PATH = "shaders/";
+
 
 GLuint texture = 0;
 
