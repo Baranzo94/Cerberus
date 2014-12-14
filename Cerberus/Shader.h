@@ -1,7 +1,15 @@
 #ifndef Shader_h
 #define Shader_h
+
 #include <GL/glew.h>
+
+#ifdef __APPLE__
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_opengl.h>
+#elif WIN32
 #include <SDL_opengl.h>
+#endif
+
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -12,10 +20,10 @@ enum SHADER_TYPE
 	FRAGMENT_SHADER = GL_FRAGMENT_SHADER
 };
 
-GLuint loadShaderFromMemory(const char* pMem, SHADER_TYPE shaderType);
-GLuint loadShaderFromFile(const std::string& filename, SHADER_TYPE shaderType);
+GLuint loadShaderFromFile(std::string& filename, SHADER_TYPE shaderType);
+GLuint loadShaderFromMemory(const char * pMem, SHADER_TYPE shaderType);
 
-bool checkForCompilerErrors(GLuint shaderProgram);
 bool checkForLinkErrors(GLuint program);
-#endif
+bool checkForCompilerErrors(GLuint shaderProgram);
 
+#endif

@@ -45,6 +45,12 @@
     <ClCompile Include="FBXLoader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Texture.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Light.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h">
@@ -74,6 +80,12 @@
     <ClInclude Include="FBXLoader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Texture.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Light.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="assets\shaders\textureVS.glsl">
@@ -86,6 +98,30 @@
       <Filter>shaders</Filter>
     </None>
     <None Include="assets\shaders\simpleFS.glsl">
+      <Filter>shaders</Filter>
+    </None>
+    <None Include="assets\shaders\bumpMappingFS.glsl">
+      <Filter>shaders</Filter>
+    </None>
+    <None Include="assets\shaders\bumpMappingVS.glsl">
+      <Filter>shaders</Filter>
+    </None>
+    <None Include="assets\shaders\diffuseFS.glsl">
+      <Filter>shaders</Filter>
+    </None>
+    <None Include="assets\shaders\diffuseVS.glsl">
+      <Filter>shaders</Filter>
+    </None>
+    <None Include="assets\shaders\directionalLightTextureFS.glsl">
+      <Filter>shaders</Filter>
+    </None>
+    <None Include="assets\shaders\directionalLightTextureVS.glsl">
+      <Filter>shaders</Filter>
+    </None>
+    <None Include="assets\shaders\specularFS.glsl">
+      <Filter>shaders</Filter>
+    </None>
+    <None Include="assets\shaders\specularVS.glsl">
       <Filter>shaders</Filter>
     </None>
   </ItemGroup>

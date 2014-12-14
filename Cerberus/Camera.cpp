@@ -28,7 +28,7 @@ void Camera::update()
 	m_View = glm::lookAt(position, m_LookAt, m_Up);
 }
 
-void Camera::SetLook(float x, float y, float z)
+void Camera::setLook(float x, float y, float z)
 {
 	m_LookAt = vec3(x, y, z);
 }
@@ -39,14 +39,14 @@ void Camera::setUp(float x, float y, float z)
 }
 
 
-void Camera::setNearClip(float nearclip)
+void Camera::setNearClip(float near)
 {
-	m_NearClip = nearclip;
+	m_NearClip = near;
 }
 
-void Camera::setFarClip(float farclip)
+void Camera::setFarClip(float far)
 {
-	m_FarClip = farclip;
+	m_FarClip = far;
 }
 
 void Camera::setFOV(float FOV)
