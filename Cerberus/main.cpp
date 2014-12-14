@@ -244,6 +244,50 @@ void Initialise()
 	go->getTransform()->setPosition(2.0f, -2.0f, -6.0f);
 	go->getTransform()->setRotation(0.0f, -40.0f, 0.0f);
 	displayList.push_back(go);
+
+	modelPath = ASSET_PATH + MODEL_PATH + "fighter1.3ds";
+	go = loadFBXFromFile(modelPath);
+	for (int i = 0; i < go->getChildCount(); i++)
+	{
+		Material * material = new Material();
+		material->init();
+		std::string vsPath = ASSET_PATH + SHADER_PATH + "bumpMappingVS.glsl";
+		std::string fsPath = ASSET_PATH + SHADER_PATH + "bumpMappingFS.glsl";
+		material->loadShader(vsPath, fsPath);
+
+		std::string diffTexturePath = ASSET_PATH + TEXTURE_PATH + "robin.png";
+		material->loadDiffuseMap(diffTexturePath);
+		std::string specTexturePath = ASSET_PATH + TEXTURE_PATH + "robin.png";
+		material->loadSpecularMap(specTexturePath);
+		go->getChild(i)->setMaterial(material);
+	}
+	go->getTransform()->setPosition(0.0f, 2.0f, -6.0f);
+	go->getTransform()->setRotation(30.0f, 45.0f, 0.0f);
+	go->getTransform()->setScale(0.05f, 0.05f, 0.05f);
+	displayList.push_back(go);
+
+	modelPath = ASSET_PATH + MODEL_PATH + "fighter1.3ds";
+	go = loadFBXFromFile(modelPath);
+	for (int i = 0; i < go->getChildCount(); i++)
+	{
+		Material * material = new Material();
+		material->init();
+		std::string vsPath = ASSET_PATH + SHADER_PATH + "bumpMappingVS.glsl";
+		std::string fsPath = ASSET_PATH + SHADER_PATH + "bumpMappingFS.glsl";
+		material->loadShader(vsPath, fsPath);
+
+		std::string diffTexturePath = ASSET_PATH + TEXTURE_PATH + "robin.png";
+		material->loadDiffuseMap(diffTexturePath);
+		std::string specTexturePath = ASSET_PATH + TEXTURE_PATH + "robin.png";
+		material->loadSpecularMap(specTexturePath);
+		go->getChild(i)->setMaterial(material);
+	}
+	go->getTransform()->setPosition(-5.0f, 2.0f, -6.0f);
+	go->getTransform()->setRotation(30.0f, 45.0f, 0.0f);
+	go->getTransform()->setScale(0.05f, 0.05f, 0.05f);
+	displayList.push_back(go);
+	
+
 }
 
 
