@@ -1,28 +1,35 @@
-//TO DO: Add GameObject interaction.
 #ifndef Component_h
 #define Component_h
 
-#include<gl/glew.h>
-#include<SDL_opengl.h>
-#include <iostream>
-#include <fstream>
 #include <string>
+
+class GameObject;
 
 class Component
 {
 public:
-	Component();
-	virtual ~Component();
-	virtual void init();
-	virtual void render();
-	virtual void update();
-	virtual void destroy();
-	const std::string& getType();
-	void toggleActive();
-	bool isActive();
+    Component();
+    virtual ~ Component();
+    
+    virtual void init();
+    
+    virtual void update();
+    
+    virtual void render();
+    
+    virtual void destroy();
+    
+    const std::string& getType();
+    
+    bool isActive();
+    
+    void toggleActive();
+    
+    void setParent(GameObject * object);
 protected:
-	std::string m_Type;
-	bool m_Active;
+    std::string m_Type;
+    bool m_Active;
+    GameObject * m_Parent;
 private:
 };
 
