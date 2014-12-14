@@ -68,3 +68,8 @@ mat4& Camera::getProjection()
 {
 	return m_Projection;
 }
+//LD Added
+vec3& Camera::getLookAt()
+{
+	return m_LookAt;
+}

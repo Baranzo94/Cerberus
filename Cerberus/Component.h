@@ -26,8 +26,14 @@ public:
 	void toggleActive();
 
 	void setParent(GameObject * object);
+
+	//LD Added
+	const std::string& getName();
+	GameObject * getParent();
+	void setName(const std::string& name);
 protected:
 	std::string m_Type;
+	std::string m_Name;
 	bool m_Active;
 	GameObject * m_Parent;
 private:

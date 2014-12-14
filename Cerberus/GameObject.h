@@ -48,6 +48,9 @@ public:
 
 	int getChildCount();
 	GameObject * getChild(int index);
+	//
+	Component * getComponentByType(const std::string& type);
+	Component * getComponentByName(const std::string& name);
 
 
 

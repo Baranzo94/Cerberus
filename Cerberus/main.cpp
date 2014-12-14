@@ -63,6 +63,10 @@ const std::string MODEL_PATH = "models/";
 #include "Camera.h"
 #include "Light.h"
 #include "FBXLoader.h"
+//LD Added Inputs
+#include "CameraController.h"
+#include "Input.h"
+#include "Timer.h"
 
 
 //SDL Window
@@ -95,7 +99,7 @@ void InitWindow(int width, int height, bool fullscreen)
 {
 	//Create a window
 	window = SDL_CreateWindow(
-		"Lab 6",             // window title
+		"Cerberus",             // window title
 		SDL_WINDOWPOS_CENTERED,     // x position, centered
 		SDL_WINDOWPOS_CENTERED,     // y position, centered
 		width,                        // width, in pixels
@@ -132,7 +136,6 @@ void CleanUp()
 	TTF_Quit();
 	SDL_Quit();
 }
-
 
 
 //Initialising OpenGL. MUST BE CALLED BEFORE ANY COMPONENTS ARE CREATED.
@@ -203,8 +206,14 @@ void Initialise()
 	c->setFarClip(1000.0f);
 
 	mainCamera->setCamera(c);
-	displayList.push_back(mainCamera);
+	//LD In
+	CameraController * controller = new CameraController();
+	controller->setCamera(c);
 
+	mainCamera->addComponent(controller);
+
+	displayList.push_back(mainCamera);
+	//
 	mainLight = new GameObject();
 	mainLight->setName("MainLight");
 
@@ -244,6 +253,9 @@ void Initialise()
 	go->getTransform()->setPosition(2.0f, -2.0f, -6.0f);
 	go->getTransform()->setRotation(0.0f, -40.0f, 0.0f);
 	displayList.push_back(go);
+
+	//LD Add
+	Time.start();
 }
 
 
@@ -380,16 +392,65 @@ int main(int argc, char * arg[])
 	CheckForErrors();
 
 	setViewport(WINDOW_WIDTH, WINDOW_HEIGHT);
-
+	//LD in
+	//initInput();
+	//
 	Initialise();
 
 	SDL_Event event;
 	//The Game Loop
 	while (running)
-	{
+	/*{
 		while (SDL_PollEvent(&event)) {
 			if (event.type == SDL_QUIT || event.type == SDL_WINDOWEVENT_CLOSE) {
 				running = false;
+			}
+		}*/
+
+	{
+		//While we still have events in the queue
+		while (SDL_PollEvent(&event)) {
+			//Get event type
+			//if (event.type == SDL_QUIT || event.type == SDL_WINDOWEVENT_CLOSE) {
+			//set our boolean which controls the loop to false
+			//    running = false;
+			//}
+			switch (event.type)
+			{
+			case SDL_QUIT:
+			case SDL_WINDOWEVENT_CLOSE:
+			{
+										  running = false;
+										  break;
+			}
+			case SDL_KEYDOWN:
+			{
+								InputSystem.getKeyboard().setKeyDown(event.key.keysym.sym);
+								printf("Key press detected\n");
+								break;
+			}
+			case SDL_KEYUP:
+			{
+							  InputSystem.getKeyboard().setKeyUp(event.key.keysym.sym);
+							  printf("Key release detected\n");
+							  break;
+			}
+			case SDL_MOUSEMOTION:
+			{
+									InputSystem.getMouse().setMousePosition(event.motion.x, event.motion.y, event.motion.xrel, event.motion.yrel);
+									break;
+			}
+			case SDL_MOUSEBUTTONDOWN:
+			{
+										InputSystem.getMouse().setMouseButtonDown(event.button.button);
+										break;
+			}
+			case SDL_MOUSEBUTTONUP:
+			{
+									  InputSystem.getMouse().setMouseButtonUp(event.button.button);
+									  break;
+			}
+			
 			}
 		}
 		update();

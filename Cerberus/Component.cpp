@@ -2,9 +2,11 @@
 
 #include "Component.h"
 
-Component::Component()
+Component::Component() // Modified by LD
 {
 	m_Type = "Component";
+	m_Name = "Component";
+	m_Parent = NULL;
 	m_Active = true;
 }
 
@@ -51,4 +53,19 @@ void Component::toggleActive()
 void Component::setParent(GameObject *object)
 {
 	m_Parent = object;
+}
+
+const std::string& Component::getName()
+{
+	return m_Name;
+}
+
+void Component::setName(const std::string& name)
+{
+	m_Name = name;
+}
+
+GameObject * Component::getParent()
+{
+	return m_Parent;
 }

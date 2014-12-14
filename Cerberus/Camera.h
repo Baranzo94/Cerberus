@@ -31,6 +31,8 @@ public:
 
 	mat4& getView();
 	mat4& getProjection();
+	//LD added
+	vec3& getLookAt();
 protected:
 private:
 	vec3 m_LookAt;
