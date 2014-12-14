@@ -15,6 +15,7 @@
 #include "Mesh.h"
 #include "Material.h"
 #include "Camera.h"
+#include "FBXLoader.h"
 using glm::mat4;
 using glm::vec3;
 
@@ -22,9 +23,10 @@ using glm::vec3;
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 #ifdef _DEBUG && WIN32
-const std::string ASSET_PATH = "assets/";
+const std::string ASSET_PATH = "./assets/";
 const std::string TEXTURE_PATH = "textures/";
 const std::string SHADER_PATH = "shaders/";
+const std::string MODEL_PATH = "models/";
 #else
 
 const std::string ASSET_PATH = "assets";
@@ -220,6 +222,20 @@ void Initialise()
 	mainCamera = new GameObject();
 	mainCamera->setName("MainCamera");
 
+	std::string modelPath = ASSET_PATH + MODEL_PATH + "armoredrecon.fbx";
+	GameObject*go = loadFBXFromFile(modelPath);
+	for (int i = 0; i < go->getChildCount(); i++)
+	{
+		Material*material = new Material();
+		material->init();
+		std::string vsPath = ASSET_PATH + SHADER_PATH + "/simpleVS.glsl";
+		std::string fsPath = ASSET_PATH + SHADER_PATH + "/simpleFS.glsl";
+		material->loadShader(vsPath, fsPath);
+
+		go->getChild(i)->setMaterial(material);
+	}
+	displayList.push_back(go);
+
 	Transform *t = new Transform();
 	t->setPosition(0.0f, 0.0f, 10.0f);
 	mainCamera->setTransform(t);
@@ -263,8 +279,33 @@ void Initialise()
 }
 
 //This function draws objects to be rendered.
-void render()
+void renderGameObject(GameObject*pObject)
 {
+	if (!pObject)
+	{
+		return;
+	}
+
+	Mesh * currentMesh = pObject->getMesh();
+	Transform * currentTransform = pObject->getTransform();
+	Material * currentMaterial = pObject->getMaterial();
+	if (currentMesh && currentMaterial && currentTransform)
+	{
+		currentMaterial->bind();
+		currentMesh->Bind();
+		GLint MVPLocation = currentMaterial->getUniformLocation("MVP");
+		Camera * cam = mainCamera->getCamera();
+		mat4 MVP = cam->getProjection()*cam->getView()*currentTransform->getModelMatrix();
+		glUniformMatrix4fv(MVPLocation, 1, GL_FALSE, glm::value_ptr(MVP));
+		glDrawElements(GL_TRIANGLES, currentMesh->getIndexCount(), GL_UNSIGNED_INT, 0);
+	}
+	for (int i = 0; i < pObject->getChildCount(); i++)
+	{
+		renderGameObject(pObject->getChild(i));
+	}
+}
+void render()
+{/*
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f); // This sets the clear colour AKA the background.
 	glClearDepth(1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -293,6 +334,20 @@ void render()
 	}
 
 	SDL_GL_SwapWindow(window); //VERY IMPORTANT!!!! Used to swap the back and front buffer.
+	*/
+	//old imediate mode!
+	//Set the clear colour(background)
+	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+	glClearDepth(1.0f);
+	//clear the colour and depth buffer
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	//alternative sytanx
+	for (auto iter = displayList.begin(); iter != displayList.end(); iter++)
+	{
+		(*iter)->render();
+		renderGameObject((*iter));
+	}
+	SDL_GL_SwapWindow(window);
 	
 }
 
