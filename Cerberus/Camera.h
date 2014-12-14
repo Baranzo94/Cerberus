@@ -24,6 +24,9 @@ public:
 	void setAspectRatio(float ratio);
 	mat4& getView();
 	mat4& getProjection();
+
+	vec3& getLookAt();
+
 protected:
 private:
 	vec3 m_LookAt;

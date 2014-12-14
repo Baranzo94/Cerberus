@@ -23,7 +23,7 @@ using glm::vec3;
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 #ifdef _DEBUG && WIN32
-const std::string ASSET_PATH = "./assets/";
+const std::string ASSET_PATH = "assets/";
 const std::string TEXTURE_PATH = "textures/";
 const std::string SHADER_PATH = "shaders/";
 const std::string MODEL_PATH = "models/";
