@@ -1,3 +1,5 @@
+#include <iostream>
+
 #include "CameraController.h"
 #include "Camera.h"
 #include "GameObject.h"
@@ -29,22 +31,26 @@ void CameraController::update()
 		vec3 currentPos = m_AttachedCamera->getParent()->getTransform()->getPosition();
 		vec3 currentLook = m_AttachedCamera->getLookAt();
 		vec3 forward = currentLook - currentPos;
-		forward.y = 0.0f;
+		forward.z = 0.5f;
 		glm::normalize(forward);
 		forward *= m_Speed;
 
 		//Grab input
-		if (InputSystem.getKeyboard().isKeyDown(SDLK_w))
+		if (Input::getInput().getKeyboard()->isKeyDown(SDLK_w))
 		{
-			currentPos.z += forward.z*m_Speed*Time.getDeltaTime();
+			std::cout << "Time " << Timer::getTimer().getDeltaTime() << std::endl;
+			currentPos.z += forward.z*m_Speed*Timer::getTimer().getDeltaTime();
+			currentLook.z += forward.z*m_Speed*Timer::getTimer().getDeltaTime();
 		}
-		else if (InputSystem.getKeyboard().isKeyDown(SDLK_s))
+		else if (Input::getInput().getKeyboard()->isKeyDown(SDLK_s))
 		{
-			currentPos.z -= forward.z*m_Speed*Time.getDeltaTime();
+			currentPos.z -= forward.z*m_Speed*Timer::getTimer().getDeltaTime();
+			currentLook.z = forward.z*m_Speed*Timer::getTimer().getDeltaTime();
 		}
 
 		//adjust values
 		m_AttachedCamera->getParent()->getTransform()->setPosition(currentPos.x, currentPos.y, currentPos.z);
+		m_AttachedCamera->setLook(currentLook.x, currentLook.y, currentLook.z);
 	}
 }
 
