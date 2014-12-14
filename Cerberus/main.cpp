@@ -129,7 +129,7 @@ void CleanUp()
 	}
 	displayList.clear();
 
-	Input::getInput().destroy();
+
 	SDL_GL_DeleteContext(glcontext);
 	SDL_DestroyWindow(window);
 	IMG_Quit();
@@ -137,11 +137,6 @@ void CleanUp()
 	SDL_Quit();
 }
 
-//void initInput()
-//{
-//	const std::string inputDBFilename = ASSET_PATH + "gamecontrollerdb.txt";
-//	Input::getInput().init(inputDBFilename);
-//}
 
 //Initialising OpenGL. MUST BE CALLED BEFORE ANY COMPONENTS ARE CREATED.
 void initOpenGL()
@@ -260,19 +255,17 @@ void Initialise()
 	displayList.push_back(go);
 
 	//LD Add
-	Timer::getTimer().start();
+	Time.start();
 }
 
 
 //Updaing the game state.
 void update()
 {
-	Timer::getTimer().update();
 	for (auto iter = displayList.begin(); iter != displayList.end(); iter++)
 	{
 		(*iter)->update();
 	}
-	Input::getInput().update();
 }
 
 //called in render to render the game objects
@@ -432,29 +425,29 @@ int main(int argc, char * arg[])
 			}
 			case SDL_KEYDOWN:
 			{
-								Input::getInput().getKeyboard()->setKeyDown(event.key.keysym.sym);
+								InputSystem.getKeyboard().setKeyDown(event.key.keysym.sym);
 								printf("Key press detected\n");
 								break;
 			}
 			case SDL_KEYUP:
 			{
-							  Input::getInput().getKeyboard()->setKeyUp(event.key.keysym.sym);
+							  InputSystem.getKeyboard().setKeyUp(event.key.keysym.sym);
 							  printf("Key release detected\n");
 							  break;
 			}
 			case SDL_MOUSEMOTION:
 			{
-									Input::getInput().getMouse()->setMousePosition(event.motion.x, event.motion.y, event.motion.xrel, event.motion.yrel);
+									InputSystem.getMouse().setMousePosition(event.motion.x, event.motion.y, event.motion.xrel, event.motion.yrel);
 									break;
 			}
 			case SDL_MOUSEBUTTONDOWN:
 			{
-										Input::getInput().getMouse()->setMouseButtonDown(event.button.button);
+										InputSystem.getMouse().setMouseButtonDown(event.button.button);
 										break;
 			}
 			case SDL_MOUSEBUTTONUP:
 			{
-									  Input::getInput().getMouse()->setMouseButtonUp(event.button.button);
+									  InputSystem.getMouse().setMouseButtonUp(event.button.button);
 									  break;
 			}
 			
