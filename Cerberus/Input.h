@@ -25,27 +25,21 @@ public:
 
 	void update();
 
-	Keyboard* getKeyboard()
+	Keyboard& getKeyboard()
 	{
 		return m_Keyboard;
 	};
 
-	Mouse* getMouse()
+	Mouse& getMouse()
 	{
 		return m_Mouse;
 	};
 
-	static Input& getInput()
-	{
-		static Input input;
-		return input;
-	}
-
 private:
-	Keyboard *m_Keyboard;
-	Mouse *m_Mouse;
+	Keyboard m_Keyboard;
+	Mouse m_Mouse;
 };
 
-
+static Input InputSystem;
 
 #endif

@@ -27,12 +27,6 @@ public:
 		return m_DeltaTime;
 	}
 
-	static Timer& getTimer()
-	{
-		static Timer time;
-		return time;
-	}
-
 private:
 	int m_CurrentTime;
 	int m_LastTime;
@@ -42,5 +36,6 @@ private:
 	bool m_Started;
 };
 
+static Timer Time;
 
 #endif

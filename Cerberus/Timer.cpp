@@ -40,7 +40,7 @@ void Timer::stop()
 
 void Timer::update()
 {
-	if (m_Started)
+	if (m_Started && !m_Paused)
 	{
 		m_CurrentFrameCount++;
 		m_CurrentTime = SDL_GetTicks();
