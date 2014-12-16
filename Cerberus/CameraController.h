@@ -14,10 +14,14 @@ public:
 	void update();
 
 	void setCamera(Camera * cam);
-	void setSpeed(float speed);
+	//void setSpeed(float speed);
+	void moveForward();
+	void moveBackward();
+	float DeltaTime;
 private:
 	float m_Speed;
 	Camera * m_AttachedCamera;
+	//float DeltaTime;
 
 };
 

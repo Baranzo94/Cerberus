@@ -33,6 +33,7 @@ public:
 	mat4& getProjection();
 	//LD added
 	vec3& getLookAt();
+	vec3 m_Position;
 protected:
 private:
 	vec3 m_LookAt;
@@ -45,6 +46,7 @@ private:
 	float m_FarClip;
 	float m_FOV;
 	float m_AspectRatio;
+	
 };
 
 #endif

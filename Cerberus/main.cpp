@@ -86,6 +86,9 @@ vec4 ambientLightColour = vec4(1.0f, 1.0f, 1.0f, 1.0f);
 std::vector<GameObject*> displayList;
 GameObject * mainCamera;
 GameObject * mainLight;
+CameraController * controller = new CameraController();
+Timer * timer;
+
 
 void CheckForErrors()
 {
@@ -207,7 +210,7 @@ void Initialise()
 
 	mainCamera->setCamera(c);
 	//LD In
-	CameraController * controller = new CameraController();
+	controller = new CameraController();
 	controller->setCamera(c);
 
 	mainCamera->addComponent(controller);
@@ -224,6 +227,8 @@ void Initialise()
 	Light * light = new Light();
 	mainLight->setLight(light);
 	displayList.push_back(mainLight);
+
+	timer = new Timer();
 
 	for (auto iter = displayList.begin(); iter != displayList.end(); iter++)
 	{
@@ -255,13 +260,14 @@ void Initialise()
 	displayList.push_back(go);
 
 	//LD Add
-	Time.start();
+	timer->start();
 }
 
 
 //Updaing the game state.
 void update()
 {
+	controller->DeltaTime = timer->getDeltaTime();
 	for (auto iter = displayList.begin(); iter != displayList.end(); iter++)
 	{
 		(*iter)->update();
@@ -424,15 +430,33 @@ int main(int argc, char * arg[])
 										  break;
 			}
 			case SDL_KEYDOWN:
-			{
-								InputSystem.getKeyboard().setKeyDown(event.key.keysym.sym);
-								printf("Key press detected\n");
-								break;
-			}
+				switch (event.key.keysym.sym){
+					{
+
+				case SDLK_w:
+					controller->moveForward();
+					break;
+				case SDLK_s:
+					controller->moveBackward();
+					break;
+					}
+				
+
+								//InputSystem.getKeyboard().setKeyDown(event.key.keysym.sym);
+								
+					/*if (InputSystem.getKeyboard().isKeyDown(SDLK_w))
+								{
+									controller->moveForward();
+								}
+								//controller->update();
+								//printf("Key press detected\n");
+								break;*/
+			//}
+				}
 			case SDL_KEYUP:
 			{
 							  InputSystem.getKeyboard().setKeyUp(event.key.keysym.sym);
-							  printf("Key release detected\n");
+							  //printf("Key release detected\n");
 							  break;
 			}
 			case SDL_MOUSEMOTION:

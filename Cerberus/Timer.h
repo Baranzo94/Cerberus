@@ -36,6 +36,6 @@ private:
 	bool m_Started;
 };
 
-static Timer Time;
+//static Timer Time;
 
 #endif
