@@ -25,22 +25,22 @@ void Keyboard::update()
 
 }
 
-void Keyboard::setKeyDown(short index)
+void Keyboard::setKeyDown(int index)
 {
 	keysDown[index] = true;
 }
 
-void Keyboard::setKeyUp(short index)
+void Keyboard::setKeyUp(int index)
 {
 	keysUp[index] = true;
 }
 
-bool Keyboard::isKeyDown(short index)
+bool Keyboard::isKeyDown(int index)
 {
 	return keysDown[index];
 }
 
-bool Keyboard::isKeyUp(short index)
+bool Keyboard::isKeyUp(int index)
 {
 	return keysUp[index];
 }

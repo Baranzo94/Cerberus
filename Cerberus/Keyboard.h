@@ -7,15 +7,15 @@ public:
 	Keyboard();
 	~Keyboard();
 
-	void setKeyDown(short keyCode);
-	void setKeyUp(short keyCode);
+	void setKeyDown(int keyCode);
+	void setKeyUp(int keyCode);
 
-	bool isKeyDown(short keyCode);
-	bool isKeyUp(short keyCode);
+	bool isKeyDown(int keyCode);
+	bool isKeyUp(int keyCode);
 
 	void update();
 private:
-	const static short MAX_NO_KEYS = 256;
+	const static int MAX_NO_KEYS = 256;
 	bool keysDown[MAX_NO_KEYS];
 	bool keysUp[MAX_NO_KEYS];
 };
