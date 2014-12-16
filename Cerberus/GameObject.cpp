@@ -203,16 +203,16 @@ GameObject * GameObject::getChild(int index)
 		return NULL;
 }
 
-Component * GameObject::getComponentByType(const std::string& type)
-{
-	Component *found = NULL;
-	//std::find_if(m_Components.begin(),m_Components.end(),[type](Component &n){return n.getType()==type;});
-	return found;
-}
+//Component * GameObject::getComponentByType(const std::string& type)
+//{
+//	Component *found = NULL;
+//	//std::find_if(m_Components.begin(),m_Components.end(),[type](Component &n){return n.getType()==type;});
+//	return found;
+//}
 
-Component * GameObject::getComponentByName(const std::string& name)
-{
-	Component *found = NULL;
-	//std::find_if(m_Components.begin(),m_Components.end(),[type](Component &n){return n.getType()==type;});
-	return found;
-}
+//Component * GameObject::getComponentByName(const std::string& name)
+//{
+//	Component *found = NULL;
+//	//std::find_if(m_Components.begin(),m_Components.end(),[type](Component &n){return n.getType()==type;});
+//	return found;
+//}
