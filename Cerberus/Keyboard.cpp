@@ -44,23 +44,3 @@ bool Keyboard::isKeyUp(short index)
 {
 	return keysUp[index];
 }
-
-/*void Keyboard::setKeyDown(short keyCode)
-{
-	keysDown[keyCode] = true;
-}
-
-void Keyboard::setKeyUp(short keyCode)
-{
-	keysUp[keyCode] = true;
-}
-
-bool Keyboard::isKeyDown(short keyCode)
-{
-	return keysDown[keyCode];
-}
-
-bool Keyboard::isKeyUp(short keyCode)
-{
-	return keysUp[keyCode];
-}*/

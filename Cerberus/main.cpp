@@ -209,9 +209,6 @@ void Initialise()
 	c->setFOV(45.0f);
 	c->setNearClip(0.1f);
 	c->setFarClip(1000.0f);
-	vec3 rot = t->getRotation();
-	vec3 lookAt = Camera::calculateLookAtFromAngle(rot);
-	c->setLook(lookAt.x, lookAt.y, lookAt.z);
 
 	mainCamera->setCamera(c);
 	//LD In
@@ -339,13 +336,7 @@ void renderGameObject(GameObject * pObject)
 		glUniform4fv(specularMatLocation, 1, glm::value_ptr(specularMaterialColour));
 		glUniform4fv(specularLightLocation, 1, glm::value_ptr(specularLightColour));
 
-		//glUniformMatrix4fv(cameraProjectionLocation, 1, GL_FALSE, glm::value_ptr(cam->getProjection()));
-		//mat4 rotationY = glm::rotate(mat4(1.0f), mainCamera->getTransform()->getRotation().y, vec3(0.0f, 1.0f, 0.0f));
-		//mat4 rotationX = glm::rotate(mat4(1.0f), mainCamera->getTransform()->getRotation().x, vec3(1.0f, 0.0f, 0.0f));
-		//glUniformMatrix4fv(viewLocation, 1, GL_FALSE, glm::value_ptr(rotationY*rotationX));
-		glUniform4fv(cameraPositionLocation, 1, glm::value_ptr(mainCamera->getTransform()->getPosition()));
-		//glUniform1i(cubeTextureLocation, 0);
-
+		glUniform3fv(cameraPositionLocation, 1, glm::value_ptr(cameraPosition));
 		glUniform1f(specularpowerLocation, specularPower);
 
 		glUniform1i(diffuseTextureLocation, 0);

@@ -33,9 +33,6 @@ public:
 	mat4& getProjection();
 	//LD added
 	vec3& getLookAt();
-	vec3& getUp();
-
-	static vec3& calculateLookAtFromAngle(const vec3& rot);
 protected:
 private:
 	vec3 m_LookAt;
