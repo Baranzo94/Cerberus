@@ -17,6 +17,16 @@ public:
 	bool isButtonDown(int buttonIndex);
 	bool isButtonUp(int buttonIndex);
 
+	int getRelativeMouseX()
+		 {
+		return m_RelMouseX;
+		};
+	
+		int getRelativeMouseY()
+		 {
+		return m_RelMouseY;
+		};
+
 private:
 	static const int MAX_NO_OF_BUTTONS = 3;
 	int m_AbsMouseX;

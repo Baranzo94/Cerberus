@@ -16,7 +16,10 @@ public:
 	void setCamera(Camera * cam);
 	void setSpeed(float speed);
 private:
-	float m_Speed;
+	//float m_Speed;
+	float m_ForwardSpeed;
+	float m_StrafeSpeed;
+	float m_LookSpeed;
 	Camera * m_AttachedCamera;
 
 };
