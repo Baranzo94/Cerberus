@@ -17,6 +17,7 @@ public:
 	//void setSpeed(float speed);
 	void moveForward();
 	void moveBackward();
+	void camRot();
 	float DeltaTime;
 private:
 	float m_Speed;

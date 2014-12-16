@@ -60,3 +60,23 @@ bool Mouse::isButtonUp(int buttonIndex)
 {
 	return m_MouseButtonsUp[buttonIndex];
 }
+/*
+int Mouse::getRelativeMouseX()
+{
+	return m_RelMouseX;
+}
+
+int Mouse::getRelativeMouseY()
+{
+	return m_RelMouseY;
+}
+
+int Mouse::getAbsoluteMouseX()
+{
+	return m_AbsMouseX;
+}
+
+int Mouse::getAbsoluteMouseY()
+{
+	return m_AbsMouseY;
+}*/

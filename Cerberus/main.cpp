@@ -453,27 +453,31 @@ int main(int argc, char * arg[])
 								break;*/
 			//}
 				}
-			case SDL_KEYUP:
-			{
-							  InputSystem.getKeyboard().setKeyUp(event.key.keysym.sym);
+			//case SDL_KEYUP:
+			//{
+			//				  InputSystem.getKeyboard().setKeyUp(event.key.keysym.sym);
 							  //printf("Key release detected\n");
-							  break;
-			}
+			//				  break;
+			//}
 			case SDL_MOUSEMOTION:
 			{
-									InputSystem.getMouse().setMousePosition(event.motion.x, event.motion.y, event.motion.xrel, event.motion.yrel);
+									//InputSystem.getMouse().setMousePosition(event.motion.x, event.motion.y, event.motion.xrel, event.motion.yrel);
+									//printf("Mouse is moving\n");
+									controller->camRot();
 									break;
 			}
-			case SDL_MOUSEBUTTONDOWN:
-			{
-										InputSystem.getMouse().setMouseButtonDown(event.button.button);
-										break;
-			}
-			case SDL_MOUSEBUTTONUP:
-			{
-									  InputSystem.getMouse().setMouseButtonUp(event.button.button);
-									  break;
-			}
+			//case SDL_MOUSEBUTTONDOWN:
+			//{
+			//							InputSystem.getMouse().setMouseButtonDown(event.button.button);
+			//							printf("Button press detected\n");
+			//							break;
+			//}
+			//case SDL_MOUSEBUTTONUP:
+			//{
+			//						  InputSystem.getMouse().setMouseButtonUp(event.button.button);
+			//						  printf("Button release detected\n");
+			//						  break;
+			//}
 			
 			}
 		}

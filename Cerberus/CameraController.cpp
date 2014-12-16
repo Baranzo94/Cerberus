@@ -26,7 +26,6 @@ CameraController::~CameraController()
 
 void CameraController::update()
 {
-
 	//DeltaTime = timer->getDeltaTime();
 	/*if (m_AttachedCamera)
 	{
@@ -101,4 +100,29 @@ void CameraController::moveBackward()
 		printf("Key press S detected\n");
 		m_AttachedCamera->getParent()->getTransform()->setPosition(currentPos.x, currentPos.y, currentPos.z);
 	}
+}
+
+void CameraController::camRot()
+{
+	if (m_AttachedCamera)
+	{
+		vec3 currentRot = m_AttachedCamera->getParent()->getTransform()->getRotation();
+		vec3 currentLook = m_AttachedCamera->getLookAt();
+
+		//int mouseX = Input::getInput().getMouse()->getRelativeMouseX();
+		//int mouseY = Input::getInput().getMouse()->getRelativeMouseY();
+		//currentRot.y += mouseX*DeltaTime*m_Speed;
+		//currentRot.x += mouseY*DeltaTime*m_Speed;
+
+		//InputSystem.getMouse().setMousePosition(event.motion.x, event.motion.y, event.motion.xrel, event.motion.yrel);
+
+		//vec3 currentRot = m_AttachedCamera->getParent()->getTransform()->getRotation();
+		//vec3 currentLook = m_AttachedCamera->getLookAt();
+		//printf("Mouse is moving\n");
+		m_AttachedCamera->getParent()->getTransform()->setRotation(currentRot.x, currentRot.y, currentRot.z);
+		
+		m_AttachedCamera->setLook(currentLook.x + (cos(currentRot.x)*cos(currentRot.y)), currentLook.y /*+ (cos(currentRot.x)*cos(currentRot.y))*/, currentLook.z + (sin(currentRot.x)*cos(currentRot.y)));
+		
+	}
+
 }
