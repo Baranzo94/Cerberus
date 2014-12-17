@@ -44,7 +44,7 @@ void Timer::update()
 	{
 		m_CurrentFrameCount++;
 		m_CurrentTime = SDL_GetTicks();
-		m_DeltaTime = (float)(m_CurrentTime - m_LastTime) / 1000.0f;
+		m_DeltaTime = (float)((m_CurrentTime - m_LastTime) / 1000.0f);
 		m_LastTime = m_CurrentTime;
 	}
 }

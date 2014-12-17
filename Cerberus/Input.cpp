@@ -3,6 +3,8 @@
 
 Input::Input()
 {
+	m_Mouse = NULL;
+	m_Keyboard = NULL;
 
 }
 

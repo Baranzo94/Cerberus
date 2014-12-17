@@ -13,10 +13,13 @@ using glm::vec3;
 CameraController::CameraController()
 {
 	m_AttachedCamera = NULL;
-	m_Speed = -0.2;
+	m_ForwardSpeed = 2;
+	m_StrafeSpeed = 1;
+	m_LookSpeed = 0.02;
 	m_Type = "CameraController";
 	m_Name = m_Type;
 	DeltaTime = NULL;
+	m_MouseMouvement = false;
 }
 
 CameraController::~CameraController()
@@ -26,6 +29,7 @@ CameraController::~CameraController()
 
 void CameraController::update()
 {
+	DeltaTime = Timer::getTimer().getDeltaTime();
 	if (m_AttachedCamera)
 	{
 		//lets just use standard FPS Controllers(mouse & keyboard)
@@ -44,34 +48,53 @@ void CameraController::update()
 		//Grab input
 		if (Input::getInput().getKeyboard()->isKeyDown(SDLK_w))
 		{
-			currentPos.z += forward.z*m_Speed*Timer::getTimer().getDeltaTime();
-			currentLook.z += forward.z*m_Speed*Timer::getTimer().getDeltaTime();
-			printf("Moving forward");
+			currentPos.z += forward.z*m_ForwardSpeed*(DeltaTime);
+			currentLook.z += forward.z*m_ForwardSpeed*(DeltaTime);
+			m_AttachedCamera->getParent()->getTransform()->setPosition(currentPos.x, currentPos.y, currentPos.z);
 		}
 		else if (Input::getInput().getKeyboard()->isKeyDown(SDLK_s))
 		{
-			currentPos.z -= forward.z*m_Speed*Timer::getTimer().getDeltaTime();
-			currentLook.z -= forward.z*m_Speed*Timer::getTimer().getDeltaTime();
-			printf("Moving Backward");
+			currentPos.z -= forward.z*m_ForwardSpeed*(DeltaTime);
+			currentLook.z -= forward.z*m_ForwardSpeed*(DeltaTime);
+			m_AttachedCamera->getParent()->getTransform()->setPosition(currentPos.x, currentPos.y, currentPos.z);
+		}
+
+		if (Input::getInput().getKeyboard()->isKeyDown(SDLK_a))
+		{
+			currentPos += right*m_StrafeSpeed*(DeltaTime);
+			currentLook += right*m_StrafeSpeed*(DeltaTime);
+			m_AttachedCamera->getParent()->getTransform()->setPosition(currentPos.x, currentPos.y, currentPos.z);
+		}
+		else if (Input::getInput().getKeyboard()->isKeyDown(SDLK_d))
+		{
+			currentPos += right*(m_StrafeSpeed*-1)*(DeltaTime);
+			currentLook += right*(m_StrafeSpeed*-1)*(DeltaTime);
+			m_AttachedCamera->getParent()->getTransform()->setPosition(currentPos.x, currentPos.y, currentPos.z);
 		}
 
 		//get the mouse values and directly move the yaw & pitch of the camera(the x and y of the camera rotation)
 
 		//use these to caculate the look at
-		int mouseX = Input::getInput().getMouse()->getRelativeMouseX();
-		int mouseY = Input::getInput().getMouse()->getRelativeMouseY();
+		if (m_MouseMouvement == true)
+		{
+			int mouseX = Input::getInput().getMouse()->getRelativeMouseX();
+			int mouseY = Input::getInput().getMouse()->getRelativeMouseY();
 
-		currentRot.y += mouseX*Timer::getTimer().getDeltaTime()*m_Speed;
-		currentRot.x += mouseY*Timer::getTimer().getDeltaTime()*m_Speed;
+			currentRot.y += mouseX*(DeltaTime)*m_LookSpeed;
+			currentRot.x += mouseY*(DeltaTime)*m_LookSpeed;
 
 
-		//adjust values
-		m_AttachedCamera->getParent()->getTransform()->setRotation(currentRot.x, currentRot.y, currentRot.z);
-		m_AttachedCamera->getParent()->getTransform()->setPosition(currentPos.x, currentPos.y, currentPos.z);
-		m_AttachedCamera->setLook(currentLook.x + (cos(currentRot.x)*cos(currentRot.y)),
-			currentLook.y,
-			currentLook.z + (sin(currentRot.x)*cos(currentRot.y)));
-	}
+			//adjust values
+			m_AttachedCamera->getParent()->getTransform()->setRotation(currentRot.x, currentRot.y, currentRot.z);
+		//	m_AttachedCamera->getParent()->getTransform()->setPosition(currentPos.x, currentPos.y, currentPos.z);
+			m_AttachedCamera->setLook(currentLook.x + (cos(currentRot.x)*cos(currentRot.y)),
+				currentLook.y,
+				currentLook.z + (sin(currentRot.x)*cos(currentRot.y)));
+
+			m_MouseMouvement = false;
+		}
+		}
+
 
 
 	//DeltaTime = timer->getDeltaTime();
@@ -105,6 +128,11 @@ void CameraController::update()
 void CameraController::setCamera(Camera * cam)
 {
 	m_AttachedCamera = cam;
+}
+
+void CameraController::mouseMoved()
+{
+	m_MouseMouvement = true;
 }
 
 //void CameraController::setSpeed(float speed)

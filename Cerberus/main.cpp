@@ -6,6 +6,8 @@
 
 
 
+
+
 #include <iostream>
 #include <glew.h>
 #include <glm/glm.hpp>
@@ -68,6 +70,8 @@ const std::string MODEL_PATH = "models/";
 #include "Input.h"
 #include "Timer.h"
 
+
+
 //SDL Window
 SDL_Window * window = NULL;
 //SDL GL Context
@@ -81,10 +85,11 @@ const int WINDOW_HEIGHT = 480;
 bool running = true;
 
 vec4 ambientLightColour = vec4(1.0f, 1.0f, 1.0f, 1.0f);
-
+//vec3 lookAt = vec3(1.0f, 1.0f, 1.0f);
 std::vector<GameObject*> displayList;
 GameObject * mainCamera;
 GameObject * mainLight;
+CameraController * controller;
 //CameraController * controller = new CameraController();
 //Timer * timer;
 
@@ -205,6 +210,7 @@ void Initialise()
 
 	Transform *t = new Transform();
 	t->setPosition(0.0f, 0.0f, 2.0f);
+	t->setRotation(0.0f, 0.0f, 0.0f);
 	mainCamera->setTransform(t);
 
 	Camera * c = new Camera();
@@ -212,14 +218,16 @@ void Initialise()
 	c->setFOV(45.0f);
 	c->setNearClip(0.1f);
 	c->setFarClip(1000.0f);
+	
 
 	vec3 rot = t->getRotation();
-	vec3 lookAt = Camera::calculateLookAtFromAngle(rot);
+	vec3 lookAt = vec3(0.0f, 0.0f, 0.0f);
 	c->setLook(lookAt.x, lookAt.y, lookAt.z);
+	
 
 	mainCamera->setCamera(c);
 	//LD In
-	CameraController * controller = new CameraController();
+	controller = new CameraController();
 	controller->setCamera(c);
 
 	mainCamera->addComponent(controller);
@@ -240,7 +248,7 @@ void Initialise()
 	
 	//for (auto iter = displayList.begin(); iter != displayList.end(); iter++)
 	//{
-		//(*iter)->init();
+	//(*iter)->init();
 	//}
 
 
@@ -263,7 +271,7 @@ void Initialise()
 
 		go->getChild(i)->setMaterial(material);
 	}
-	go->getTransform()->setPosition(0.0f, -1.0f, -5.0f);
+	go->getTransform()->setPosition(1.0f, -1.0f, -5.0f);
 	go->getTransform()->setRotation(0.0f, -40.0f, 0.0f);
 	displayList.push_back(go);
 
@@ -275,7 +283,7 @@ void Initialise()
 //Updaing the game state.
 void update()
 {
-	Timer::getTimer().update();
+	//Timer::getTimer().update();
 	for (auto iter = displayList.begin(); iter != displayList.end(); iter++)
 	{
 		(*iter)->update();
@@ -352,6 +360,8 @@ void renderGameObject(GameObject * pObject)
 		glUniform1i(bumpTextureLocation, 2);
 
 		glDrawElements(GL_TRIANGLES, currentMesh->getIndexCount(), GL_UNSIGNED_INT, 0);
+		
+	
 	}
 
 	for (int i = 0; i < pObject->getChildCount(); i++)
@@ -423,6 +433,7 @@ int main(int argc, char * arg[])
 		}*/
 
 	{
+		Timer::getTimer().update();
 		//While we still have events in the queue
 		while (SDL_PollEvent(&event)) {
 			//Get event type
@@ -442,6 +453,7 @@ int main(int argc, char * arg[])
 
 			{
 				Input::getInput().getKeyboard()->setKeyDown(event.key.keysym.sym);
+				printf("keydown");
 				break;
 			}
 				
@@ -470,7 +482,7 @@ int main(int argc, char * arg[])
 									//Attempts at capturing the output
 									Input::getInput().getMouse()->setMousePosition(event.motion.x, event.motion.y, event.motion.xrel, event.motion.yrel);
 									//InputSystem.getMouse().setMousePosition(event.motion.x, event.motion.y, event.motion.xrel, event.motion.yrel);
-									
+									controller->mouseMoved();
 									printf("Mouse is moving\n");
 									//controller->camRot();
 									break;

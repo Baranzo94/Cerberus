@@ -18,9 +18,13 @@ public:
 	void moveForward();
 	void moveBackward();
 	void camRot();
+	void mouseMoved();
 	float DeltaTime;
 private:
-	float m_Speed;
+	float m_ForwardSpeed;
+	float m_StrafeSpeed;
+	float m_LookSpeed;
+	bool m_MouseMouvement;
 	Camera * m_AttachedCamera;
 
 	//float DeltaTime;
