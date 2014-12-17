@@ -37,8 +37,8 @@ public:
 
 	static Input& getInput()
 	{
-		static Input InputSystem;
-		return InputSystem;
+		static Input inputSystem;
+		return inputSystem;
 	}
 private:
 	Keyboard m_Keyboard;

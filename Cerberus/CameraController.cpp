@@ -70,11 +70,12 @@ void CameraController::moveForward()
 	{
 
 		vec3 currentPos = m_AttachedCamera->getParent()->getTransform()->getPosition();
+		// Same as moveForward the code works without the below code 
 		//vec3 currentLook = m_AttachedCamera->getLookAt();
 		//vec3 forward = currentLook - currentPos;
 		//forward.y = 0.0f;
 		//forward = glm::normalize(forward);
-				//forward *= m_Speed;
+				//forward *= m_Speed; Not needed
 
 		//currentPos.z = currentPos.z - 2 +(m_Speed*forward.z*Time.getDeltaTime());
 		currentPos.z = currentPos.z + m_Speed;
@@ -94,7 +95,7 @@ void CameraController::moveBackward()
 		//vec3 forward = currentLook - currentPos;
 		//forward.y = 0.0f;
 		//forward = glm::normalize(forward);
-				//forward *= m_Speed;
+				//forward *= m_Speed; Not needed
 
 		currentPos.z -= m_Speed;
 		printf("Key press S detected\n");
@@ -120,9 +121,9 @@ void CameraController::camRot()
 		m_AttachedCamera->getParent()->getTransform()->setRotation(currentRot.x, currentRot.y, currentRot.z);
 		
 		//This code here controls the rotation but mucks up the forward and backward movement and causes everything to rotate
+		//Note i believe this is because of the mixed up inputs in main.cpp Mouse Motion case
 		//m_AttachedCamera->setLook(currentLook.x + (cos(currentRot.x)*cos(currentRot.y)), currentLook.y, currentLook.z + (sin(currentRot.x)*cos(currentRot.y)));
-		m_AttachedCamera->setLook(currentLook.x - (cos(currentRot.x)*cos(currentRot.y)), currentLook.y, currentLook.z + (sin(currentRot.x)*cos(currentRot.y)));
-		
+	
 	}
 
 }

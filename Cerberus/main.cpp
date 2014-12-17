@@ -68,7 +68,6 @@ const std::string MODEL_PATH = "models/";
 #include "Input.h"
 #include "Timer.h"
 
-
 //SDL Window
 SDL_Window * window = NULL;
 //SDL GL Context
@@ -208,7 +207,7 @@ void Initialise()
 	c->setNearClip(0.1f);
 	c->setFarClip(1000.0f);
 
-	//vec3 rot = t->getRotation();
+	vec3 rot = t->getRotation();
 	//c->setLook(lookAt.x, lookAt.y, lookAt.z);
 
 	mainCamera->setCamera(c);
@@ -372,7 +371,6 @@ void render()
 }
 
 
-
 //Main Method
 int main(int argc, char * arg[])
 {
@@ -447,10 +445,14 @@ int main(int argc, char * arg[])
 			
 			case SDL_MOUSEMOTION:
 			{
+									//Mysteriously any input is being read as a mouse input as well
 
+									//Attempts at capturing the output
+									//Input::getInput().getMouse()->setMousePosition(event.motion.x, event.motion.y, event.motion.xrel, event.motion.yrel);
 									//InputSystem.getMouse().setMousePosition(event.motion.x, event.motion.y, event.motion.xrel, event.motion.yrel);
-									//printf("Mouse is moving\n");
-									controller->camRot();
+									
+									printf("Mouse is moving\n");
+									//controller->camRot();
 									break;
 			}
 			}
