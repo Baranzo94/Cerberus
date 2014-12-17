@@ -22,6 +22,7 @@ public:
 private:
 	float m_Speed;
 	Camera * m_AttachedCamera;
+
 	//float DeltaTime;
 
 };

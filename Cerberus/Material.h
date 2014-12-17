@@ -1,7 +1,7 @@
 #ifndef Material_h
 #define Material_h
 
-#include <GL/glew.h>
+#include <glew.h>
 
 #include <glm/glm.hpp>
 using glm::vec4;

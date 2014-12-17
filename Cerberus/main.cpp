@@ -7,7 +7,7 @@
 
 
 #include <iostream>
-#include <GL/glew.h>
+#include <glew.h>
 #include <glm/glm.hpp>
 using glm::mat4;
 using glm::vec4;
@@ -85,8 +85,8 @@ vec4 ambientLightColour = vec4(1.0f, 1.0f, 1.0f, 1.0f);
 std::vector<GameObject*> displayList;
 GameObject * mainCamera;
 GameObject * mainLight;
-CameraController * controller = new CameraController();
-Timer * timer;
+//CameraController * controller = new CameraController();
+//Timer * timer;
 
 
 void CheckForErrors()
@@ -131,6 +131,7 @@ void CleanUp()
 	}
 	displayList.clear();
 
+	Input::getInput().destroy();
 
 	SDL_GL_DeleteContext(glcontext);
 	SDL_DestroyWindow(window);
@@ -139,6 +140,10 @@ void CleanUp()
 	SDL_Quit();
 }
 
+void initInput()
+{
+	Input::getInput().init();
+}
 
 //Initialising OpenGL. MUST BE CALLED BEFORE ANY COMPONENTS ARE CREATED.
 void initOpenGL()
@@ -176,6 +181,7 @@ void initOpenGL()
 	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
 }
 
+
 //Setting up/Reseting the viewport.
 void setViewport(int width, int height)
 {
@@ -198,7 +204,7 @@ void Initialise()
 	mainCamera->setName("MainCamera");
 
 	Transform *t = new Transform();
-	t->setPosition(0.0f, 0.0f, 10.0f);
+	t->setPosition(0.0f, 0.0f, 2.0f);
 	mainCamera->setTransform(t);
 
 	Camera * c = new Camera();
@@ -208,11 +214,12 @@ void Initialise()
 	c->setFarClip(1000.0f);
 
 	vec3 rot = t->getRotation();
-	//c->setLook(lookAt.x, lookAt.y, lookAt.z);
+	vec3 lookAt = Camera::calculateLookAtFromAngle(rot);
+	c->setLook(lookAt.x, lookAt.y, lookAt.z);
 
 	mainCamera->setCamera(c);
 	//LD In
-	controller = new CameraController();
+	CameraController * controller = new CameraController();
 	controller->setCamera(c);
 
 	mainCamera->addComponent(controller);
@@ -230,12 +237,11 @@ void Initialise()
 	mainLight->setLight(light);
 	displayList.push_back(mainLight);
 
-	timer = new Timer();
-
-	for (auto iter = displayList.begin(); iter != displayList.end(); iter++)
-	{
-		(*iter)->init();
-	}
+	
+	//for (auto iter = displayList.begin(); iter != displayList.end(); iter++)
+	//{
+		//(*iter)->init();
+	//}
 
 
 	std::string modelPath = ASSET_PATH + MODEL_PATH + "armoredrecon.fbx";
@@ -257,23 +263,24 @@ void Initialise()
 
 		go->getChild(i)->setMaterial(material);
 	}
-	go->getTransform()->setPosition(2.0f, -2.0f, -6.0f);
+	go->getTransform()->setPosition(0.0f, -1.0f, -5.0f);
 	go->getTransform()->setRotation(0.0f, -40.0f, 0.0f);
 	displayList.push_back(go);
 
 	//LD Add
-	timer->start();
+	Timer::getTimer().start();
 }
 
 
 //Updaing the game state.
 void update()
 {
-	controller->DeltaTime = timer->getDeltaTime();
+	Timer::getTimer().update();
 	for (auto iter = displayList.begin(); iter != displayList.end(); iter++)
 	{
 		(*iter)->update();
 	}
+	Input::getInput().update();
 }
 
 //called in render to render the game objects
@@ -402,6 +409,7 @@ int main(int argc, char * arg[])
 	//LD in
 	//initInput();
 	//
+	initInput();
 	Initialise();
 
 	SDL_Event event;
@@ -431,7 +439,18 @@ int main(int argc, char * arg[])
 										  break;
 			}
 			case SDL_KEYDOWN:
-				switch (event.key.keysym.sym){
+
+			{
+				Input::getInput().getKeyboard()->setKeyDown(event.key.keysym.sym);
+				break;
+			}
+				
+			case SDL_KEYUP:
+			{
+				Input::getInput().getKeyboard()->setKeyUp(event.key.keysym.sym);
+				break;
+			}
+				/*switch (event.key.keysym.sym){
 					{
 
 				case SDLK_w:
@@ -441,14 +460,15 @@ int main(int argc, char * arg[])
 					controller->moveBackward();
 					break;
 					}
-				}
+				}*/
 			
 			case SDL_MOUSEMOTION:
 			{
+				
 									//Mysteriously any input is being read as a mouse input as well
 
 									//Attempts at capturing the output
-									//Input::getInput().getMouse()->setMousePosition(event.motion.x, event.motion.y, event.motion.xrel, event.motion.yrel);
+									Input::getInput().getMouse()->setMousePosition(event.motion.x, event.motion.y, event.motion.xrel, event.motion.yrel);
 									//InputSystem.getMouse().setMousePosition(event.motion.x, event.motion.y, event.motion.xrel, event.motion.yrel);
 									
 									printf("Mouse is moving\n");

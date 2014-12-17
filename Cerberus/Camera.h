@@ -34,6 +34,9 @@ public:
 	//LD added
 	vec3& getLookAt();
 	vec3 m_Position;
+	vec3& getUp();
+
+	static vec3& calculateLookAtFromAngle(const vec3& rot);
 protected:
 private:
 	vec3 m_LookAt;

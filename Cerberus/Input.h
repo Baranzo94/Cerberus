@@ -20,17 +20,17 @@ public:
 	Input();
 	~Input();
 
-	bool init(const std::string& inputDBFilename);
+	bool init();
 	void destroy();
 
 	void update();
 
-	Keyboard & getKeyboard()
+	Keyboard* getKeyboard()
 	{
 		return m_Keyboard;
 	};
 
-	Mouse & getMouse()
+	Mouse* getMouse()
 	{
 		return m_Mouse;
 	};
@@ -41,10 +41,11 @@ public:
 		return inputSystem;
 	}
 private:
-	Keyboard m_Keyboard;
-	Mouse  m_Mouse;
+	Keyboard * m_Keyboard;
+	Mouse *  m_Mouse;
 };
 
 //static Input InputSystem;
 
 #endif
+/*const std::string& inputDBFilename*/

@@ -1,7 +1,7 @@
 #ifndef Shader_h
 #define Shader_h
 
-#include <GL/glew.h>
+#include <glew.h>
 
 #ifdef __APPLE__
 #include <SDL2/SDL.h>

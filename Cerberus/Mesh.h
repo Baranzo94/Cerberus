@@ -1,7 +1,7 @@
 #ifndef Mesh_h
 #define Mesh_h
 
-#include <GL/glew.h>
+#include <glew.h>
 
 #ifdef __APPLE__
 #include <SDL2/SDL_opengl.h>
