@@ -208,6 +208,9 @@ void Initialise()
 	c->setNearClip(0.1f);
 	c->setFarClip(1000.0f);
 
+	//vec3 rot = t->getRotation();
+	//c->setLook(lookAt.x, lookAt.y, lookAt.z);
+
 	mainCamera->setCamera(c);
 	//LD In
 	controller = new CameraController();
@@ -440,45 +443,16 @@ int main(int argc, char * arg[])
 					controller->moveBackward();
 					break;
 					}
-				
-
-								//InputSystem.getKeyboard().setKeyDown(event.key.keysym.sym);
-								
-					/*if (InputSystem.getKeyboard().isKeyDown(SDLK_w))
-								{
-									controller->moveForward();
-								}
-								//controller->update();
-								//printf("Key press detected\n");
-								break;*/
-			//}
 				}
-			//case SDL_KEYUP:
-			//{
-			//				  InputSystem.getKeyboard().setKeyUp(event.key.keysym.sym);
-							  //printf("Key release detected\n");
-			//				  break;
-			//}
+			
 			case SDL_MOUSEMOTION:
 			{
+
 									//InputSystem.getMouse().setMousePosition(event.motion.x, event.motion.y, event.motion.xrel, event.motion.yrel);
 									//printf("Mouse is moving\n");
 									controller->camRot();
 									break;
 			}
-			//case SDL_MOUSEBUTTONDOWN:
-			//{
-			//							InputSystem.getMouse().setMouseButtonDown(event.button.button);
-			//							printf("Button press detected\n");
-			//							break;
-			//}
-			//case SDL_MOUSEBUTTONUP:
-			//{
-			//						  InputSystem.getMouse().setMouseButtonUp(event.button.button);
-			//						  printf("Button release detected\n");
-			//						  break;
-			//}
-			
 			}
 		}
 		update();

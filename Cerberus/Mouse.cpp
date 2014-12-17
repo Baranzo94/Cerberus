@@ -1,11 +1,3 @@
-//
-//  Mouse.cpp
-//  GP2BaseCode
-//
-//  Created by Brian on 23/10/2014.
-//  Copyright (c) 2014 Glasgow Caledonian University. All rights reserved.
-//
-
 #include "Mouse.h"
 
 Mouse::Mouse()
@@ -60,23 +52,3 @@ bool Mouse::isButtonUp(int buttonIndex)
 {
 	return m_MouseButtonsUp[buttonIndex];
 }
-/*
-int Mouse::getRelativeMouseX()
-{
-	return m_RelMouseX;
-}
-
-int Mouse::getRelativeMouseY()
-{
-	return m_RelMouseY;
-}
-
-int Mouse::getAbsoluteMouseX()
-{
-	return m_AbsMouseX;
-}
-
-int Mouse::getAbsoluteMouseY()
-{
-	return m_AbsMouseY;
-}*/

@@ -70,11 +70,11 @@ void CameraController::moveForward()
 	{
 
 		vec3 currentPos = m_AttachedCamera->getParent()->getTransform()->getPosition();
-		vec3 currentLook = m_AttachedCamera->getLookAt();
-		vec3 forward = currentLook - currentPos;
-		forward.y = 0.0f;
-		forward = glm::normalize(forward);
-		//forward *= m_Speed;
+		//vec3 currentLook = m_AttachedCamera->getLookAt();
+		//vec3 forward = currentLook - currentPos;
+		//forward.y = 0.0f;
+		//forward = glm::normalize(forward);
+				//forward *= m_Speed;
 
 		//currentPos.z = currentPos.z - 2 +(m_Speed*forward.z*Time.getDeltaTime());
 		currentPos.z = currentPos.z + m_Speed;
@@ -90,11 +90,11 @@ void CameraController::moveBackward()
 	{
 
 		vec3 currentPos = m_AttachedCamera->getParent()->getTransform()->getPosition();
-		vec3 currentLook = m_AttachedCamera->getLookAt();
-		vec3 forward = currentLook - currentPos;
-		forward.y = 0.0f;
-		forward = glm::normalize(forward);
-		//forward *= m_Speed;
+		//vec3 currentLook = m_AttachedCamera->getLookAt();
+		//vec3 forward = currentLook - currentPos;
+		//forward.y = 0.0f;
+		//forward = glm::normalize(forward);
+				//forward *= m_Speed;
 
 		currentPos.z -= m_Speed;
 		printf("Key press S detected\n");
@@ -106,8 +106,6 @@ void CameraController::camRot()
 {
 	if (m_AttachedCamera)
 	{
-		vec3 currentRot = m_AttachedCamera->getParent()->getTransform()->getRotation();
-		vec3 currentLook = m_AttachedCamera->getLookAt();
 
 		//int mouseX = Input::getInput().getMouse()->getRelativeMouseX();
 		//int mouseY = Input::getInput().getMouse()->getRelativeMouseY();
@@ -116,12 +114,14 @@ void CameraController::camRot()
 
 		//InputSystem.getMouse().setMousePosition(event.motion.x, event.motion.y, event.motion.xrel, event.motion.yrel);
 
-		//vec3 currentRot = m_AttachedCamera->getParent()->getTransform()->getRotation();
-		//vec3 currentLook = m_AttachedCamera->getLookAt();
+		vec3 currentRot = m_AttachedCamera->getParent()->getTransform()->getRotation();
+		vec3 currentLook = m_AttachedCamera->getLookAt();
 		//printf("Mouse is moving\n");
 		m_AttachedCamera->getParent()->getTransform()->setRotation(currentRot.x, currentRot.y, currentRot.z);
 		
-		m_AttachedCamera->setLook(currentLook.x + (cos(currentRot.x)*cos(currentRot.y)), currentLook.y /*+ (cos(currentRot.x)*cos(currentRot.y))*/, currentLook.z + (sin(currentRot.x)*cos(currentRot.y)));
+		//This code here controls the rotation but mucks up the forward and backward movement and causes everything to rotate
+		//m_AttachedCamera->setLook(currentLook.x + (cos(currentRot.x)*cos(currentRot.y)), currentLook.y, currentLook.z + (sin(currentRot.x)*cos(currentRot.y)));
+		m_AttachedCamera->setLook(currentLook.x - (cos(currentRot.x)*cos(currentRot.y)), currentLook.y, currentLook.z + (sin(currentRot.x)*cos(currentRot.y)));
 		
 	}
 
