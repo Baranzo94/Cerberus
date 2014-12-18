@@ -19,7 +19,25 @@ using glm::vec4;
 
 #include "Component.h"
 
-class Material :public Component{
+class BaseMaterial :public Component{
+public:
+	BaseMaterial()
+	{
+		m_Type = "BaseMaterial";
+	}
+
+	~BaseMaterial();
+	virtual void bind(){};
+	virtual void unbind(){};
+
+	bool loadShader(const std::string& vsFilename, const std::string& fsFilename);
+	GLint getUniformLocation(const std::string& name);
+protected:
+	GLuint m_ShaderProgram;
+};
+
+class Material:public BaseMaterial{
+
 public:
 	Material();
 	~Material();
@@ -28,8 +46,8 @@ public:
 
 	void bind();
 
-	bool loadShader(const std::string& vsFilename, const std::string& fsFilename);
-	GLint getUniformLocation(const std::string& name);
+	//bool loadShader(const std::string& vsFilename, const std::string& fsFilename);
+	//GLint getUniformLocation(const std::string& name);
 
 	vec4& getAmbientColour();
 	void setAmbientColour(float r, float g, float b, float a);

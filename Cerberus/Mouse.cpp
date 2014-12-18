@@ -29,6 +29,8 @@ void Mouse::update()
 		m_MouseButtonsDown[i] = false;
 		m_MouseButtonsUp[i] = false;
 	}
+
+	
 }
 
 void Mouse::setMousePosition(int absX, int absY, int relX, int relY)

@@ -3,6 +3,39 @@
 #include "Texture.h"
 #include "Vertex.h"
 
+bool BaseMaterial::loadShader(const std::string& vsFilename, const std::string& fsFilename)
+{
+	GLuint vertexShaderProgram = 0;
+	vertexShaderProgram = loadShaderFromFile(const_cast<std::string&>(vsFilename), VERTEX_SHADER);
+
+	GLuint fragmentShaderProgram = 0;
+	fragmentShaderProgram = loadShaderFromFile(const_cast<std::string&>(fsFilename), FRAGMENT_SHADER);
+
+	m_ShaderProgram = glCreateProgram();
+	glAttachShader(m_ShaderProgram, vertexShaderProgram);
+	glAttachShader(m_ShaderProgram, fragmentShaderProgram);
+	glLinkProgram(m_ShaderProgram);
+	checkForLinkErrors(m_ShaderProgram);
+
+	//now we can delete the VS & FS Programs
+	glDeleteShader(vertexShaderProgram);
+	glDeleteShader(fragmentShaderProgram);
+
+	return true;
+}
+
+BaseMaterial::~BaseMaterial()
+{
+
+}
+
+GLint BaseMaterial::getUniformLocation(const std::string& name)
+{
+	return glGetUniformLocation(m_ShaderProgram, name.c_str());
+}
+
+
+
 Material::Material()
 {
 	m_ShaderProgram = -1;
@@ -75,7 +108,7 @@ void Material::bind()
 	glVertexAttribPointer(vertexBinormalLocation, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void**)(sizeof(vec3)+sizeof(vec3)+sizeof(vec2)+sizeof(vec4)+sizeof(vec3)));
 }
 
-bool Material::loadShader(const std::string& vsFilename, const std::string& fsFilename)
+/*bool Material::loadShader(const std::string& vsFilename, const std::string& fsFilename)
 {
 	GLuint vertexShaderProgram = 0;
 	vertexShaderProgram = loadShaderFromFile(const_cast<std::string&>(vsFilename), VERTEX_SHADER);
@@ -99,7 +132,7 @@ bool Material::loadShader(const std::string& vsFilename, const std::string& fsFi
 GLint Material::getUniformLocation(const std::string& name)
 {
 	return glGetUniformLocation(m_ShaderProgram, name.c_str());
-}
+}*/
 
 vec4& Material::getAmbientColour()
 {
