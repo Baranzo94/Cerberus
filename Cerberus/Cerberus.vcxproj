@@ -48,20 +48,6 @@
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="Transform.cpp" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include="assets\shaders\bumpMappingFS.glsl" />
-    <None Include="assets\shaders\bumpMappingVS.glsl" />
-    <None Include="assets\shaders\colourFilterPostFS.glsl" />
-    <None Include="assets\shaders\diffuseFS.glsl" />
-    <None Include="assets\shaders\diffuseVS.glsl" />
-    <None Include="assets\shaders\directionalLightTextureFS.glsl" />
-    <None Include="assets\shaders\directionalLightTextureVS.glsl" />
-    <None Include="assets\shaders\passThroughVS.glsl" />
-    <None Include="assets\shaders\skyFS.glsl" />
-    <None Include="assets\shaders\skyVS.glsl" />
-    <None Include="assets\shaders\specularFS.glsl" />
-    <None Include="assets\shaders\specularVS.glsl" />
-  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{3837ECDB-11AC-4C45-B464-6E31FC72A170}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
