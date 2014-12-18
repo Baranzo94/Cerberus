@@ -13,7 +13,6 @@
   <ItemGroup>
     <ClInclude Include="Camera.h" />
     <ClInclude Include="CameraController.h" />
-    <ClInclude Include="ColourFilters.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="CubeMapMaterial.h" />
     <ClInclude Include="FBXLoader.h" />
@@ -24,7 +23,6 @@
     <ClInclude Include="Material.h" />
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="Mouse.h" />
-    <ClInclude Include="PostProcessing.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="Timer.h" />
@@ -45,11 +43,24 @@
     <ClCompile Include="Material.cpp" />
     <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="Mouse.cpp" />
-    <ClCompile Include="PostProcessing.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="Transform.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="assets\shaders\bumpMappingFS.glsl" />
+    <None Include="assets\shaders\bumpMappingVS.glsl" />
+    <None Include="assets\shaders\colourFilterPostFS.glsl" />
+    <None Include="assets\shaders\diffuseFS.glsl" />
+    <None Include="assets\shaders\diffuseVS.glsl" />
+    <None Include="assets\shaders\directionalLightTextureFS.glsl" />
+    <None Include="assets\shaders\directionalLightTextureVS.glsl" />
+    <None Include="assets\shaders\passThroughVS.glsl" />
+    <None Include="assets\shaders\skyFS.glsl" />
+    <None Include="assets\shaders\skyVS.glsl" />
+    <None Include="assets\shaders\specularFS.glsl" />
+    <None Include="assets\shaders\specularVS.glsl" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{3837ECDB-11AC-4C45-B464-6E31FC72A170}</ProjectGuid>

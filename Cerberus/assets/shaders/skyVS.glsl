@@ -10,6 +10,6 @@ uniform mat4 projection;
 
 void main()
 {
-	vertexTexCoordsOut = normalize(vertexPosition);
-	gl_Position = projection*view * vec4(vertexPosition + cameraPos, 1.0);
+	vertexTexCoordsOut = vertexPosition;
+	gl_Position = (projection*view) * vec4(vertexPosition + cameraPos, 1.0);
 }
