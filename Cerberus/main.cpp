@@ -284,6 +284,7 @@ void Initialise()
 //Updaing the game state.
 void update()
 {
+	//SDL_WarpMouseInWindow(window, (640 / 2), (480 / 2));
 	//Timer::getTimer().update();
 	for (auto iter = displayList.begin(); iter != displayList.end(); iter++)
 	{
@@ -412,6 +413,7 @@ int main(int argc, char * arg[])
 
 
 	InitWindow(WINDOW_WIDTH, WINDOW_HEIGHT, false);
+	SDL_WarpMouseInWindow(window, (640 / 2), (480 / 2));
 
 	initOpenGL();
 	CheckForErrors();
