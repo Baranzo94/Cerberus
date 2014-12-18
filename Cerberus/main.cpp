@@ -211,7 +211,7 @@ void Initialise()
 
 	Transform *t = new Transform();
 	t->setPosition(0.0f, 0.0f, 2.0f);
-	t->setRotation(0.0f, 0.0f, 0.0f);
+	t->setRotation(0.0f, -glm::radians(180.0f), 0.0f);
 	mainCamera->setTransform(t);
 
 	Camera * c = new Camera();
@@ -221,9 +221,9 @@ void Initialise()
 	c->setFarClip(1000.0f);
 	
 
-	vec3 rot = t->getRotation();
-	vec3 lookAt = vec3(0.0f, 0.0f, 0.0f);
-	c->setLook(lookAt.x, lookAt.y, lookAt.z);
+	//vec3 rot = t->getRotation();
+	//vec3 lookAt = vec3(0.0f, 0.0f, 0.0f);
+	//c->setLook(lookAt.x, lookAt.y, lookAt.z);
 	
 
 	mainCamera->setCamera(c);
@@ -475,7 +475,7 @@ int main(int argc, char * arg[])
 					}
 				}*/
 			
-			/*case SDL_MOUSEMOTION:
+		case SDL_MOUSEMOTION:
 			{
 									int xID = 0;
 									int xRelID = 0;
@@ -488,28 +488,28 @@ int main(int argc, char * arg[])
 //Input::getInput().getMouse()->setMousePosition(event.motion.x, event.motion.y, event.motion.xrel, event.motion.yrel);
 									if (event.motion.x > Mouse::DeadzoneNeg && event.motion.x < Mouse::DeadzonePos)
 									{
-										Input::getInput().getMouse()->setMousePositionX(xID, xRelID);
+										Input::getInput().getMouse()->setMousePosition(xID, yID, xRelID, yRelID );
 									}
 									else{
-										Input::getInput().getMouse()->setMousePositionX(event.motion.x, event.motion.xrel);
+										Input::getInput().getMouse()->setMousePosition(event.motion.x, event.motion.y, event.motion.xrel, event.motion.yrel);
 									}
 									if (event.motion.y > Mouse::DeadzoneNeg && event.motion.y < Mouse::DeadzonePos)
 									{
-										Input::getInput().getMouse()->setMousePositionY(yID, yRelID);
+										Input::getInput().getMouse()->setMousePosition(xID, yID, xRelID, yRelID);
 									}
 									else{
-										Input::getInput().getMouse()->setMousePositionY(event.motion.y, event.motion.yrel);
+										Input::getInput().getMouse()->setMousePosition(event.motion.x, event.motion.y, event.motion.xrel, event.motion.yrel);
 									}
 									//Input::getInput().getMouse()->setMousePositionX(event.motion.x,event.motion.xrel);
 									//Input::getInput().getMouse()->setMousePositionY(event.motion.y,event.motion.yrel);
 									//InputSystem.getMouse().setMousePosition(event.motion.x, event.motion.y, event.motion.xrel, event.motion.yrel);
-									controller->mouseMoved();
+									//controller->mouseMoved();
 									printf("Mouse is moving\n");
 									
 									break; 
 
 									
-			}*/
+			}
 			}
 		}
 		update();
