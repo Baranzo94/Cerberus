@@ -15,11 +15,11 @@ public:
 	~PostProcessing();
 
 	void init
-		(
-		int width, int height,
-		std::string& vertexShaderFilename,
+	(
+		int width, int height, 
+		std::string& vertexShaderFilename, 
 		std::string& fragmentShaderFilename
-		);
+	);
 
 	void bind();
 
