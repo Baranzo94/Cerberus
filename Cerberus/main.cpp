@@ -46,7 +46,7 @@ const std::string TEXTURE_PATH;
 const std::string FONT_PATH;
 const std::string MODEL_PATH;
 #else
-const std::string ASSET_PATH="/assets/";
+const std::string ASSET_PATH = "/assets/";
 const std::string SHADER_PATH = "shaders/";
 const std::string TEXTURE_PATH = "textures/";
 const std::string FONT_PATH = "fonts/";
@@ -69,6 +69,9 @@ const std::string MODEL_PATH = "models/";
 #include "Timer.h"
 //Claw Added Input
 #include "CubeMapMaterial.h"
+//Claw Added Input
+#include "PostProcessing.h"
+#include "ColourFilters.h"
 
 
 //SDL Window
@@ -88,16 +91,20 @@ vec4 ambientLightColour = vec4(1.0f, 1.0f, 1.0f, 1.0f);
 std::vector<GameObject*> displayList;
 GameObject * mainCamera;
 GameObject * mainLight;
+//skybox by claw
 GameObject * skyBox = NULL;
+//Pp by claw
+PostProcessing postProcessor;
 //Liam CC
 CameraController * controller;
 
+
 void CheckForErrors()
 {
-    GLenum error;
-    do{
-        error=glGetError();
-    }while(error!=GL_NO_ERROR);
+	GLenum error;
+	do{
+		error = glGetError();
+	} while (error != GL_NO_ERROR);
 }
 
 void InitWindow(int width, int height, bool fullscreen)
@@ -117,31 +124,36 @@ void InitWindow(int width, int height, bool fullscreen)
 //Remember when cleaning up, last created, first deleted.
 void CleanUp()
 {
+	//skybox by claw
 	if (skyBox)
 	{
 		skyBox->destroy();
 		delete skyBox;
 		skyBox = NULL;
 	}
-    auto iter=displayList.begin();
-	while(iter!=displayList.end())
-    {
-        (*iter)->destroy();
-        if ((*iter))
-        {
-            delete (*iter);
-            (*iter)=NULL;
-            iter=displayList.erase(iter);
-        }
-        else
-        {
-            iter++;
-        }
-    }
-    displayList.clear();
-    
+
+	auto iter = displayList.begin();
+	while (iter != displayList.end())
+	{
+		(*iter)->destroy();
+		if ((*iter))
+		{
+			delete (*iter);
+			(*iter) = NULL;
+			iter = displayList.erase(iter);
+		}
+		else
+		{
+			iter++;
+		}
+	}
+	displayList.clear();
+
 	Input::getInput().destroy();
-	
+
+	//Pp by claw
+	postProcessor.destroy();
+
 	SDL_GL_DeleteContext(glcontext);
 	SDL_DestroyWindow(window);
 	IMG_Quit();
@@ -153,60 +165,61 @@ void CleanUp()
 /*
 void initInput()
 {
-	Input::getInput().init();
+Input::getInput().init();
 }
 */
 
 //Initialising OpenGL. MUST BE CALLED BEFORE ANY COMPONENTS ARE CREATED.
 void initOpenGL()
-{    
+{
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 2);
-    SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
-    
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
+
 	glcontext = SDL_GL_CreateContext(window);
 
-    glewExperimental = GL_TRUE;
+	glewExperimental = GL_TRUE;
 	GLenum err = glewInit();
 	if (GLEW_OK != err)
 	{
 		/* If glewInit fails, something has seriously gone wrong. */
 		std::cout << "Error: " << glewGetErrorString(err) << std::endl;
 	}
-    
-    //Smooth shading
-    glShadeModel( GL_SMOOTH );
-    
-    //clear the background to black
-    glClearColor( 0.0f, 0.0f, 0.0f, 0.0f );
-    
-    //Clear the depth buffer
-    glClearDepth( 1.0f );
-    
-    //Enable depth testing
-    glEnable( GL_DEPTH_TEST );
-    
-    //The depth test to go
-    glDepthFunc( GL_LEQUAL );
-    
-    //Turn on best perspective correction
-    glHint( GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST );
+
+	//Smooth shading
+	glShadeModel(GL_SMOOTH);
+
+	//clear the background to black
+	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+
+	//Clear the depth buffer
+	glClearDepth(1.0f);
+
+	//Enable depth testing
+	glEnable(GL_DEPTH_TEST);
+
+	//The depth test to go
+	glDepthFunc(GL_LEQUAL);
+
+	//Turn on best perspective correction
+	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
 }
 
 //Setting up/Reseting the viewport.
-void setViewport( int width, int height )
+void setViewport(int width, int height)
 {
-    
-    //height must always be 1 or above.
-    if ( height == 0 ) {
-        height = 1;
-    }
 
-    
-    //Creation of the viewport
-    glViewport( 0, 0, ( GLsizei )width, ( GLsizei )height );
+	//height must always be 1 or above.
+	if (height == 0) {
+		height = 1;
+	}
+
+
+	//Creation of the viewport
+	glViewport(0, 0, (GLsizei)width, (GLsizei)height);
 }
 
+//skybox by claw
 void createSkyBox()
 {
 	Vertex triangleData[] = {
@@ -290,38 +303,42 @@ void createSkyBox()
 //This is the method which creates the components.
 void Initialise()
 {
+	//skybox by claw
 	createSkyBox();
+
+	//doesnt make any change - need check
 	std::string vsPath = ASSET_PATH + SHADER_PATH + "passThroughVS.glsl";
 	std::string fsPath = ASSET_PATH + SHADER_PATH + "colourFilterPostFS.glsl";
 
+	//Pp by claw
+	postProcessor.init(WINDOW_WIDTH, WINDOW_HEIGHT, vsPath, fsPath);
 
-    mainCamera=new GameObject();
-    mainCamera->setName("MainCamera");
-    
-    Transform *t=new Transform();
-	t->setPosition(0.0f, 0.0f, 2.0f);
+	mainCamera = new GameObject();
+	mainCamera->setName("MainCamera");
+
+	Transform *t = new Transform();
+	t->setPosition(0.0f, 0.0f, 10.0f);
 	t->setRotation(0.0f, 0.0f, 0.0f);
-    mainCamera->setTransform(t);
-    
-    Camera * c=new Camera();
-    c->setAspectRatio((float)(WINDOW_WIDTH/WINDOW_HEIGHT));
-    c->setFOV(45.0f);
-    c->setNearClip(0.1f);
-    c->setFarClip(1000.0f);
+	mainCamera->setTransform(t);
 
-/*	///Laim CC
+	Camera * c = new Camera();
+	c->setAspectRatio((float)(WINDOW_WIDTH / WINDOW_HEIGHT));
+	c->setFOV(45.0f);
+	c->setNearClip(0.1f);
+	c->setFarClip(1000.0f);
+
+	/*	///Laim CC
 	vec3 rot = t->getRotation();
 	vec3 lookAt = vec3(0.0f, 0.0f, 0.0f);
 	c->setLook(lookAt.x, lookAt.y, lookAt.z);	*/
-    
-    mainCamera->setCamera(c);
+
+	mainCamera->setCamera(c);
 	//LD In
-/*	controller = new CameraController();
+	/*	controller = new CameraController();
 	controller->setCamera(c);
 	mainCamera->addComponent(controller);	*/
+	displayList.push_back(mainCamera);
 
-    displayList.push_back(mainCamera);
-    
 	mainLight = new GameObject();
 	mainLight->setName("MainLight");
 
@@ -332,13 +349,13 @@ void Initialise()
 	Light * light = new Light();
 	mainLight->setLight(light);
 	displayList.push_back(mainLight);
-    
-    for(auto iter=displayList.begin();iter!=displayList.end();iter++)
-    {
-        (*iter)->init();
-    }
-    
 
+	for (auto iter = displayList.begin(); iter != displayList.end(); iter++)
+	{
+		(*iter)->init();
+	}
+
+	//1 st
 	std::string modelPath = ASSET_PATH + MODEL_PATH + "armoredrecon.fbx";
 	GameObject * go = loadFBXFromFile(modelPath);
 	for (int i = 0; i < go->getChildCount(); i++)
@@ -355,13 +372,14 @@ void Initialise()
 		material->loadSpecularMap(specTexturePath);
 		std::string bumpTexturePath = ASSET_PATH + TEXTURE_PATH + "armoredrecon_N.png";
 		material->loadBumpMap(bumpTexturePath);
-	
+
 		go->getChild(i)->setMaterial(material);
 	}
 	go->getTransform()->setPosition(2.0f, -2.0f, -6.0f);
 	go->getTransform()->setRotation(0.0f, -40.0f, 0.0f);
 	displayList.push_back(go);
 
+	//2 nd
 	modelPath = ASSET_PATH + MODEL_PATH + "fighter1.3ds";
 	go = loadFBXFromFile(modelPath);
 	for (int i = 0; i < go->getChildCount(); i++)
@@ -383,6 +401,7 @@ void Initialise()
 	go->getTransform()->setScale(0.05f, 0.05f, 0.05f);
 	displayList.push_back(go);
 
+	//3 rd
 	modelPath = ASSET_PATH + MODEL_PATH + "fighter1.3ds";
 	go = loadFBXFromFile(modelPath);
 	for (int i = 0; i < go->getChildCount(); i++)
@@ -403,7 +422,7 @@ void Initialise()
 	go->getTransform()->setRotation(30.0f, 45.0f, 0.0f);
 	go->getTransform()->setScale(0.05f, 0.05f, 0.05f);
 	displayList.push_back(go);
-	
+
 	//LD Add
 	//Timer::getTimer().start();
 }
@@ -414,10 +433,10 @@ void update()
 {
 	skyBox->update();
 
-    for(auto iter=displayList.begin();iter!=displayList.end();iter++)
-    {
-        (*iter)->update();
-    }
+	for (auto iter = displayList.begin(); iter != displayList.end(); iter++)
+	{
+		(*iter)->update();
+	}
 }
 
 void renderSkyBox()
@@ -483,6 +502,7 @@ void renderGameObject(GameObject * pObject)
 		GLint diffuseTextureLocation = currentMaterial->getUniformLocation("diffuseMap");
 		GLint specularTextureLocation = currentMaterial->getUniformLocation("specularMap");
 		GLint bumpTextureLocation = currentMaterial->getUniformLocation("bumpMap");
+
 		Camera * cam = mainCamera->getCamera();
 		Light* light = mainLight->getLight();
 
@@ -532,20 +552,33 @@ void renderGameObject(GameObject * pObject)
 //the function which renders (draws) the objects onto the back buffer.
 void render()
 {
-    
-	glClearColor(0.0f, 0.0f, 0.0f, 1.0f); 
-	glClearDepth(1.0f);
-   
-    glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
+	//Pp by claw
+	postProcessor.bind();
 
+	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+	glClearDepth(1.0f);
+
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+	//skybox by claw
 	renderSkyBox();
-    
+
 	for (auto iter = displayList.begin(); iter != displayList.end(); iter++)
 	{
 		renderGameObject((*iter));
 	}
-    
-    SDL_GL_SwapWindow(window);
+
+	//Pp by claw
+	//now switch to normal framebuffer
+	postProcessor.preDraw();
+	//Grab stuff from shader
+	GLint colourFilterLocation = postProcessor.getUniformVariableLocation("colourFilter");
+	glUniformMatrix3fv(colourFilterLocation, 1, GL_FALSE, glm::value_ptr(SEPIA_FILTER));
+
+	postProcessor.draw();
+	postProcessor.postDraw();
+
+	SDL_GL_SwapWindow(window);
 }
 
 
@@ -587,21 +620,6 @@ int main(int argc, char * arg[])
 	while (running)
 	{
 
-		//keybroad input
-
-		//
-
-		if (GetAsyncKeyState(0x57))
-		{
-			std::cout << "You Press a button" << std::endl;
-		}
-		else
-		{
-			std::cout << "You Press Nothing" << std::endl;
-		}
-
-		//
-
 		while (SDL_PollEvent(&event)) {
 			if (event.type == SDL_QUIT || event.type == SDL_WINDOWEVENT_CLOSE) {
 				running = false;
@@ -614,7 +632,7 @@ int main(int argc, char * arg[])
 		time_t  Time = time(0);
 		struct  tm*now = localtime(&Time);
 
-		std::cout << (now->tm_year + 1900) << '-' << (now->tm_mon + 1) << '-' << now->tm_sec << std::endl;
+		//std::cout << (now->tm_hour) << '-' << (now->tm_min) << '-' << now->tm_sec << std::endl;
 
 
 
