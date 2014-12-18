@@ -70,7 +70,6 @@ const std::string MODEL_PATH = "models/";
 #include "CameraController.h"
 #include "Input.h"
 #include "Timer.h"
-#include "Skybox.h"
 
 
 
@@ -92,8 +91,6 @@ std::vector<GameObject*> displayList;
 GameObject * mainCamera;
 GameObject * mainLight;
 CameraController * controller;
-
-GameObject * skyBox = NULL;
 //CameraController * controller = new CameraController();
 //Timer * timer;
 
@@ -123,13 +120,6 @@ void InitWindow(int width, int height, bool fullscreen)
 //Remember when cleaning up, last created, first deleted.
 void CleanUp()
 {
-	if (skyBox)
-	{
-		skyBox->destroy();
-		delete skyBox;
-		skyBox = NULL;
-	}
-
 	auto iter = displayList.begin();
 	while (iter != displayList.end())
 	{
@@ -212,92 +202,10 @@ void setViewport(int width, int height)
 	glViewport(0, 0, (GLsizei)width, (GLsizei)height);
 }
 
-void createSkybox()
-{
-	Vertex triangleData[] = {
-			{ vec3(-10.0f, 10.0f, 10.0f) },// Top Left
-			{ vec3(-10.0f, -10.0f, 10.0f) },// Bottom Left
-			{ vec3(10.0f, -10.0f, 10.0f) }, //Bottom Right
-			{ vec3(10.0f, 10.0f, 10.0f) },// Top Right
-
-
-			//back
-			{ vec3(-10.0f, 10.0f, -10.0f) },// Top Left
-			{ vec3(-10.0f, -10.0f, -10.0f) },// Bottom Left
-			{ vec3(10.0, -10.0f, -10.0f) }, //Bottom Right
-			{ vec3(10.0f, 10.0f, -10.0f) }// Top Right
-	};
-
-
-	GLuint indices[] = {
-		//front
-		0, 1, 2,
-		0, 3, 2,
-
-		//left
-		4, 5, 1,
-		4, 1, 0,
-
-		//right
-		3, 7, 2,
-		7, 6, 2,
-
-		//bottom
-		1, 5, 2,
-		6, 2, 1,
-
-		//top
-		5, 0, 7,
-		5, 7, 3,
-
-		//back
-		4, 5, 6,
-		4, 7, 6
-	};
-
-	//creat mesh and copy in
-
-	Mesh * pMesh = new Mesh();
-	pMesh->init();
-
-	pMesh->copyVertexData(8, sizeof(Vertex), (void**)triangleData);
-	pMesh->copyIndexData(36, sizeof(int), (void**)indices);
-
-	Transform *t = new Transform();
-	t->setPosition(0.0f, 0.0f, 0.0f);
-	//load textures and skybox material + Shaders
-	Skybox * material = new Skybox();
-	material->init();
-
-	std::string vsPath = ASSET_PATH + SHADER_PATH + "/skyVS.glsl";
-	std::string fsPath = ASSET_PATH + SHADER_PATH + "/skyFS.glsl";
-	material->loadShader(vsPath, fsPath);
-
-	std::string posZTexturename = ASSET_PATH + TEXTURE_PATH + "CloudyLightRaysFront2048.png";
-	std::string negZTexturename = ASSET_PATH + TEXTURE_PATH + "CloudyLightRaysBack2048.png";
-	std::string posXTexturename = ASSET_PATH + TEXTURE_PATH + "CloudyLightRaysLeft2048.png";
-	std::string negXTexturename = ASSET_PATH + TEXTURE_PATH + "CloudyLightRaysRight2048.png";
-	std::string posYTexturename = ASSET_PATH + TEXTURE_PATH + "CloudyLightRaysUp2048.png";
-	std::string negYTexturename = ASSET_PATH + TEXTURE_PATH + "CloudyLightRaysDown2048.png";
-
-	material->loadCubeTexture(posZTexturename, negZTexturename, posXTexturename, negXTexturename, posYTexturename, negYTexturename);
-	//create gameobject but don't add to queue!
-	skyBox = new GameObject();
-	skyBox->setMaterial(material);
-	skyBox->setTransform(t);
-	skyBox->setMesh(pMesh);
-
-	CheckForErrors();
-}
-
 
 //This is the method which creates the components.
 void Initialise()
 {
-	createSkybox();
-	
-
-
 	mainCamera = new GameObject();
 	mainCamera->setName("MainCamera");
 
@@ -376,18 +284,12 @@ void Initialise()
 //Updaing the game state.
 void update()
 {
-	SDL_WarpMouseInWindow(window, (640 / 2), (480 / 2));
 	//Timer::getTimer().update();
 	for (auto iter = displayList.begin(); iter != displayList.end(); iter++)
 	{
 		(*iter)->update();
 	}
 	Input::getInput().update();
-
-	//BOOL WINAPI SetCursorPos(
-	//	_In_  int X,
-	//	_In_ int Y
-	//	);
 }
 
 //called in render to render the game objects
@@ -400,7 +302,7 @@ void renderGameObject(GameObject * pObject)
 
 	Mesh * currentMesh = pObject->getMesh();
 	Transform * currentTransform = pObject->getTransform();
-	Material * currentMaterial = (Material*)pObject->getMaterial();
+	Material * currentMaterial = pObject->getMaterial();
 
 	if (currentMesh && currentMaterial && currentTransform)
 	{
@@ -460,45 +362,13 @@ void renderGameObject(GameObject * pObject)
 
 		glDrawElements(GL_TRIANGLES, currentMesh->getIndexCount(), GL_UNSIGNED_INT, 0);
 		
-		currentMaterial->unbind();
+	
 	}
 
 	for (int i = 0; i < pObject->getChildCount(); i++)
 	{
 		renderGameObject(pObject->getChild(i));
 	}
-}
-
-void renderSkybox()
-{
-	skyBox->render();
-
-	Mesh * currentMesh = skyBox->getMesh();
-	Skybox * currentMaterial = (Skybox*)skyBox->getMaterial();
-	if (currentMesh && currentMaterial)
-	{
-		Camera * cam = mainCamera->getCamera();
-
-		currentMaterial->bind();
-		currentMesh->bind();
-
-		GLint cameraLocation = currentMaterial->getUniformLocation("cameraPos");
-		GLint viewLocation = currentMaterial->getUniformLocation("view");
-		GLint projectionLocation = currentMaterial->getUniformLocation("projection");
-		GLint cubeTextureLocation = currentMaterial->getUniformLocation("cubeTexture");
-
-		glUniformMatrix4fv(projectionLocation, 1, GL_FALSE, glm::value_ptr(cam->getProjection()));
-		mat4 rotationY = glm::rotate(mat4(1.0f), mainCamera->getTransform()->getRotation().y, vec3(0.0f, 1.0f, 0.0f));
-		mat4 rotationX = glm::rotate(mat4(1.0f), mainCamera->getTransform()->getRotation().x, vec3(1.0f, 0.0f, 0.0f));
-		glUniformMatrix4fv(viewLocation, 1, GL_FALSE, glm::value_ptr(rotationY*rotationX));
-		glUniform4fv(cameraLocation, 1, glm::value_ptr(mainCamera->getTransform()->getPosition()));
-		glUniform1i(cubeTextureLocation, 0);
-
-		glDrawElements(GL_TRIANGLES, currentMesh->getIndexCount(), GL_UNSIGNED_INT, 0);
-
-		currentMaterial->unbind();
-	}
-	CheckForErrors();
 }
 
 //the function which renders (draws) the objects onto the back buffer.
