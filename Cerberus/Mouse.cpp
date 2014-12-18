@@ -23,12 +23,31 @@ void Mouse::update()
 
 }
 
-void Mouse::setMousePosition(int absX, int absY, int relX, int relY)
+/*void Mouse::setMousePosition(int absX, int absY, int relX, int relY)
 {
 	m_AbsMouseX = absX;
 	m_AbsMouseY = absY;
 	m_RelMouseX = relX;
 	m_RelMouseY = relY;
+}*/
+
+void Mouse::setMousePositionX(int absX, int relX)
+{
+	m_AbsMouseX = absX;
+	m_RelMouseX = relX;
+}
+void Mouse::setMousePositionY(int absY,int relY)
+{
+	m_AbsMouseY = absY;
+	m_RelMouseY = relY;
+}
+
+void Mouse::setMousePositionDefaults()
+{
+	m_AbsMouseX = 0;
+	m_RelMouseX = 0;
+	m_AbsMouseY = 0;
+	m_RelMouseY = 0;
 }
 
 void Mouse::setMouseButtonDown(int buttonIndex)

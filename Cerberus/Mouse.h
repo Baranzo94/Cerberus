@@ -9,7 +9,9 @@ public:
 
 	void update();
 
-	void setMousePosition(int absX, int absY, int relX, int relY);
+	//void setMousePosition(int absX, int absY, int relX, int relY);
+	void setMousePositionX(int absX,int relX);
+	void setMousePositionY(int absY,int relY);
 
 	void setMouseButtonDown(int buttonIndex);
 	void setMouseButtonUp(int buttonIndex);
@@ -17,6 +19,7 @@ public:
 	bool isButtonDown(int buttonIndex);
 	bool isButtonUp(int buttonIndex);
 
+	void setMousePositionDefaults();
 	int getRelativeMouseX()
 	{
 		return m_RelMouseX;
@@ -30,6 +33,10 @@ public:
 
 	int getAbsoluteMouseY();
 	*/
+public:
+	const static int DeadzoneNeg = -100;
+	const static int DeadzonePos = 100;
+
 private:
 	static const int MAX_NO_OF_BUTTONS = 3;
 	int m_AbsMouseX;

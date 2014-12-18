@@ -31,6 +31,7 @@ using glm::vec3;
 #include <SDL_image.h>
 #include <SDL_ttf.h>
 #include <gl/GLU.h>
+#include <Windows.h>
 #endif
 
 #include <vector>
@@ -453,7 +454,7 @@ int main(int argc, char * arg[])
 
 			{
 				Input::getInput().getKeyboard()->setKeyDown(event.key.keysym.sym);
-				printf("keydown");
+				printf("keydown\n");
 				break;
 			}
 				
@@ -474,19 +475,41 @@ int main(int argc, char * arg[])
 					}
 				}*/
 			
-			case SDL_MOUSEMOTION:
+			/*case SDL_MOUSEMOTION:
 			{
+									int xID = 0;
+									int xRelID = 0;
+									int yID = 0;
+									int yRelID = 0;
 				
-									//Mysteriously any input is being read as a mouse input as well
 
 									//Attempts at capturing the output
-									Input::getInput().getMouse()->setMousePosition(event.motion.x, event.motion.y, event.motion.xrel, event.motion.yrel);
+									
+//Input::getInput().getMouse()->setMousePosition(event.motion.x, event.motion.y, event.motion.xrel, event.motion.yrel);
+									if (event.motion.x > Mouse::DeadzoneNeg && event.motion.x < Mouse::DeadzonePos)
+									{
+										Input::getInput().getMouse()->setMousePositionX(xID, xRelID);
+									}
+									else{
+										Input::getInput().getMouse()->setMousePositionX(event.motion.x, event.motion.xrel);
+									}
+									if (event.motion.y > Mouse::DeadzoneNeg && event.motion.y < Mouse::DeadzonePos)
+									{
+										Input::getInput().getMouse()->setMousePositionY(yID, yRelID);
+									}
+									else{
+										Input::getInput().getMouse()->setMousePositionY(event.motion.y, event.motion.yrel);
+									}
+									//Input::getInput().getMouse()->setMousePositionX(event.motion.x,event.motion.xrel);
+									//Input::getInput().getMouse()->setMousePositionY(event.motion.y,event.motion.yrel);
 									//InputSystem.getMouse().setMousePosition(event.motion.x, event.motion.y, event.motion.xrel, event.motion.yrel);
 									controller->mouseMoved();
 									printf("Mouse is moving\n");
-									//controller->camRot();
-									break;
-			}
+									
+									break; 
+
+									
+			}*/
 			}
 		}
 		update();
