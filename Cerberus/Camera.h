@@ -49,7 +49,7 @@ private:
 	float m_FarClip;
 	float m_FOV;
 	float m_AspectRatio;
-
+	
 };
 
 #endif

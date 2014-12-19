@@ -1,7 +1,7 @@
 #ifndef Shader_h
 #define Shader_h
 
-#include <GL/glew.h>
+#include <glew.h>
 
 #ifdef __APPLE__
 #include <SDL2/SDL.h>
@@ -16,8 +16,8 @@
 
 enum SHADER_TYPE
 {
-	VERTEX_SHADER=GL_VERTEX_SHADER,
-	FRAGMENT_SHADER=GL_FRAGMENT_SHADER
+	VERTEX_SHADER = GL_VERTEX_SHADER,
+	FRAGMENT_SHADER = GL_FRAGMENT_SHADER
 };
 
 GLuint loadShaderFromFile(std::string& filename, SHADER_TYPE shaderType);

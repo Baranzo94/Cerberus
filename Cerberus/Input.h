@@ -1,5 +1,3 @@
-//liam and chris cameraController
-
 #ifndef Input_h
 #define Input_h
 

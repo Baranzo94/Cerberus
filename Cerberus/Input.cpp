@@ -1,6 +1,5 @@
-//Laim and Chris CameraControl
-
 #include "Input.h"
+
 
 Input::Input()
 {
@@ -32,6 +31,7 @@ void Input::destroy()
 void Input::update()
 {
 	m_Keyboard->update();
+	m_Mouse->update();
 }
 
 bool Input::init()

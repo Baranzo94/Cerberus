@@ -92,13 +92,13 @@ void Material::bind()
 	glEnableVertexAttribArray(vertexNormalLocation);
 	glVertexAttribPointer(vertexNormalLocation, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void**)sizeof(vec3));
 	glEnableVertexAttribArray(vertexTexLocation);
-	glVertexAttribPointer(vertexTexLocation, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void**)(sizeof(vec3) + sizeof(vec3)));
+	glVertexAttribPointer(vertexTexLocation, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void**)(sizeof(vec3)+sizeof(vec3)));
 	glEnableVertexAttribArray(vertexColourLocation);
-	glVertexAttribPointer(vertexColourLocation, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void**)(sizeof(vec3) + sizeof(vec3) + sizeof(vec2)));
+	glVertexAttribPointer(vertexColourLocation, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void**)(sizeof(vec3)+sizeof(vec3)+sizeof(vec2)));
 	glEnableVertexAttribArray(vertexTangentLocation);
-	glVertexAttribPointer(vertexTangentLocation, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void**)(sizeof(vec3) + sizeof(vec3) + sizeof(vec2) + sizeof(vec4)));
+	glVertexAttribPointer(vertexTangentLocation, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void**)(sizeof(vec3)+sizeof(vec3)+sizeof(vec2)+sizeof(vec4)));
 	glEnableVertexAttribArray(vertexBinormalLocation);
-	glVertexAttribPointer(vertexBinormalLocation, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void**)(sizeof(vec3) + sizeof(vec3) + sizeof(vec2) + sizeof(vec4) + sizeof(vec3)));
+	glVertexAttribPointer(vertexBinormalLocation, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void**)(sizeof(vec3)+sizeof(vec3)+sizeof(vec2)+sizeof(vec4)+sizeof(vec3)));
 }
 
 bool Material::loadShader(const std::string& vsFilename, const std::string& fsFilename)

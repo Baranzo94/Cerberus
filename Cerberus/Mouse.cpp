@@ -1,5 +1,3 @@
-//Chris and Laim CameraControl
-
 #include "Mouse.h"
 
 Mouse::Mouse()
@@ -22,7 +20,15 @@ Mouse::~Mouse()
 
 void Mouse::update()
 {
-
+	m_AbsMouseX = 0;
+	m_AbsMouseY = 0;
+	m_RelMouseX = 0;
+	m_RelMouseY = 0;
+	for (int i = 0; i<MAX_NO_OF_BUTTONS; i++)
+	{
+		m_MouseButtonsDown[i] = false;
+		m_MouseButtonsUp[i] = false;
+	}
 }
 
 void Mouse::setMousePosition(int absX, int absY, int relX, int relY)

@@ -1,5 +1,3 @@
-//Liam and Chris CameraControl
-
 #include "Timer.h"
 
 #ifdef __APPLE__

@@ -7,7 +7,7 @@ GLuint convertSDLSurfaceToGLTexture(SDL_Surface * surface)
 	GLint  nOfColors = surface->format->BytesPerPixel;
 	GLenum texture_format = GL_RGB;
 	GLenum internalFormat = GL_RGB8;
-	if (nOfColors == 4)     
+	if (nOfColors == 4)
 	{
 		if (surface->format->Rmask == 0x000000ff){
 			texture_format = GL_RGBA;
@@ -19,7 +19,7 @@ GLuint convertSDLSurfaceToGLTexture(SDL_Surface * surface)
 			internalFormat = GL_RGBA8;
 		}
 	}
-	else if (nOfColors == 3)     
+	else if (nOfColors == 3)
 	{
 		if (surface->format->Rmask == 0x000000ff){
 			texture_format = GL_RGB;

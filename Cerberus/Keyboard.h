@@ -1,5 +1,3 @@
-//liam and chris cameraControll
-
 #ifndef Keyboard_h
 #define Keyboard_h
 

@@ -1,5 +1,3 @@
-//liam and chris cameraControll
-
 #ifndef Mouse_h
 #define Mouse_h
 
@@ -22,16 +20,15 @@ public:
 	int getRelativeMouseX()
 	{
 		return m_RelMouseX;
-	}
+	};
 
 	int getRelativeMouseY()
 	{
 		return m_RelMouseY;
-	}
-	/*int getAbsoluteMouseX();
+	};
 
-	int getAbsoluteMouseY();
-	*/
+	const static int DeadzoneNeg = -5;
+	const static int DeadzonePos = 5;
 private:
 	static const int MAX_NO_OF_BUTTONS = 3;
 	int m_AbsMouseX;

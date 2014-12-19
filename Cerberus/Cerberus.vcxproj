@@ -10,44 +10,6 @@
       <Platform>Win32</Platform>
     </ProjectConfiguration>
   </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="Camera.h" />
-    <ClInclude Include="CameraController.h" />
-    <ClInclude Include="Component.h" />
-    <ClInclude Include="CubeMapMaterial.h" />
-    <ClInclude Include="FBXLoader.h" />
-    <ClInclude Include="GameObject.h" />
-    <ClInclude Include="Input.h" />
-    <ClInclude Include="Keyboard.h" />
-    <ClInclude Include="Light.h" />
-    <ClInclude Include="Material.h" />
-    <ClInclude Include="Mesh.h" />
-    <ClInclude Include="Mouse.h" />
-    <ClInclude Include="Shader.h" />
-    <ClInclude Include="Texture.h" />
-    <ClInclude Include="Timer.h" />
-    <ClInclude Include="Transform.h" />
-    <ClInclude Include="Vertex.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="Camera.cpp" />
-    <ClCompile Include="CameraController.cpp" />
-    <ClCompile Include="Component.cpp" />
-    <ClCompile Include="CubeMapMaterial.cpp" />
-    <ClCompile Include="FBXLoader.cpp" />
-    <ClCompile Include="GameObject.cpp" />
-    <ClCompile Include="Input.cpp" />
-    <ClCompile Include="Keyboard.cpp" />
-    <ClCompile Include="Light.cpp" />
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="Material.cpp" />
-    <ClCompile Include="Mesh.cpp" />
-    <ClCompile Include="Mouse.cpp" />
-    <ClCompile Include="Shader.cpp" />
-    <ClCompile Include="Texture.cpp" />
-    <ClCompile Include="Timer.cpp" />
-    <ClCompile Include="Transform.cpp" />
-  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{3837ECDB-11AC-4C45-B464-6E31FC72A170}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
@@ -90,13 +52,13 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>C:\SDL2\include;C:\Program Files\Autodesk\FBX\FBX SDK\2015.1\include;C:\SDL2_ttf-2.0.12\include;C:\SDL2_image-2.0.0\include;C:\glew-1.11.0\lib\Release\Win32;C:\glew-1.11.0\include;C:\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\glew-1.11.0\include;C:\Program Files\Autodesk\FBX\FBX SDK\2015.1\include;C:\glew-1.11.0\include\GL;C:\glm;C:\SDL2_image-2.0.0\include;C:\SDL2_ttf-2.0.12\include;C:\SDL2\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>C:\Program Files\Autodesk\FBX\FBX SDK\2015.1\lib\vs2013\x86\debug;C:\SDL2_ttf-2.0.12\lib\x86;C:\SDL2\lib\x86;C:\SDL2_image-2.0.0\lib\x86;C:\glew-1.11.0\lib\Release\Win32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>libfbxsdk.lib;SDL2.lib;SDL2_image.lib;SDL2main.lib;opengl32.lib;glu32.lib;glew32.lib;SDL2_ttf.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>C:\Program Files\Autodesk\FBX\FBX SDK\2015.1\lib\vs2013\x86\debug;C:\glew-1.11.0\lib\Release\Win32;C:\SDL2_image-2.0.0\lib\x86;C:\SDL2_ttf-2.0.12\lib\x86;C:\SDL2\lib\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>libfbxsdk.lib;SDL2_ttf.lib;SDL2_image.lib;sdl2.lib;sdl2main.lib;glew32.lib;opengl32.lib;glu32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -116,6 +78,58 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
   </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="CameraController.cpp" />
+    <ClCompile Include="Component.cpp" />
+    <ClCompile Include="CubeMapMaterial.cpp" />
+    <ClCompile Include="FBXLoader.cpp" />
+    <ClCompile Include="GameObject.cpp" />
+    <ClCompile Include="Input.cpp" />
+    <ClCompile Include="Keyboard.cpp" />
+    <ClCompile Include="Light.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="Material.cpp" />
+    <ClCompile Include="Mesh.cpp" />
+    <ClCompile Include="Mouse.cpp" />
+    <ClCompile Include="Shader.cpp" />
+    <ClCompile Include="Texture.cpp" />
+    <ClCompile Include="Timer.cpp" />
+    <ClCompile Include="Transform.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Camera.h" />
+    <ClInclude Include="CameraController.h" />
+    <ClInclude Include="Component.h" />
+    <ClInclude Include="CubeMapMaterial.h" />
+    <ClInclude Include="FBXLoader.h" />
+    <ClInclude Include="GameObject.h" />
+    <ClInclude Include="Input.h" />
+    <ClInclude Include="Keyboard.h" />
+    <ClInclude Include="Light.h" />
+    <ClInclude Include="Material.h" />
+    <ClInclude Include="Mesh.h" />
+    <ClInclude Include="Mouse.h" />
+    <ClInclude Include="Shader.h" />
+    <ClInclude Include="Texture.h" />
+    <ClInclude Include="Timer.h" />
+    <ClInclude Include="Transform.h" />
+    <ClInclude Include="Vertex.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="assets\shaders\bumpMappingFS.glsl" />
+    <None Include="assets\shaders\bumpMappingVS.glsl" />
+    <None Include="assets\shaders\diffuseFS.glsl" />
+    <None Include="assets\shaders\diffuseVS.glsl" />
+    <None Include="assets\shaders\directionalLightTextureFS.glsl" />
+    <None Include="assets\shaders\directionalLightTextureVS.glsl" />
+    <None Include="assets\shaders\simpleFS.glsl" />
+    <None Include="assets\shaders\simpleVS.glsl" />
+    <None Include="assets\shaders\specularFS.glsl" />
+    <None Include="assets\shaders\specularVS.glsl" />
+    <None Include="assets\shaders\textureFS.glsl" />
+    <None Include="assets\shaders\textureVS.glsl" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

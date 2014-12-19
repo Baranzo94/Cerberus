@@ -1,4 +1,3 @@
-//Liam and Chris CameraControls
 
 #include "Keyboard.h"
 

@@ -11,7 +11,7 @@ class Light :public Component
 {
 public:
 	Light();
-	~Light(); 
+	~Light();
 
 	vec4& getDiffuseColour();
 	void setDiffuseColour(float r, float g, float b, float a);

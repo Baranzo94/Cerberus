@@ -1,5 +1,3 @@
-//liam and chris cameraController
-
 #ifndef CameraController_h
 #define CameraController_h
 
