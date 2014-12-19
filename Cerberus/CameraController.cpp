@@ -80,7 +80,13 @@ void CameraController::update()
 
 		if (Input::getInput().getKeyboard()->isKeyDown(SDLK_q))
 		{
-			currentLook = vec3(0.0f, 0.0f, 0.0f);
+			currentPos.x = 0.0f;
+			currentPos.y = 0.0f;
+			currentPos.z = 5.0f;
+			
+			m_AttachedCamera->setLook(0.0f, 0.0f, 0.0f);
+
+
 		}
 
 		m_AttachedCamera->getParent()->getTransform()->setPosition(currentPos.x, currentPos.y, currentPos.z);

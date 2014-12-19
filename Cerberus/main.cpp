@@ -216,17 +216,17 @@ void setViewport(int width, int height)
 void createSkyBox()
 {
 	Vertex triangleData[] = {
-		{ vec3(-10.0f, 10.0f, 10.0f) },// Top Left
-		{ vec3(-10.0f, -10.0f, 10.0f) },// Bottom Left
-		{ vec3(10.0f, -10.0f, 10.0f) }, //Bottom Right
-		{ vec3(10.0f, 10.0f, 10.0f) },// Top Right
+		{ vec3(-20.0f, 20.0, 20.0) },// Top Left
+		{ vec3(-20.0, -20.0, 20.0) },// Bottom Left
+		{ vec3(20.0, -20.0, 20.0) }, //Bottom Right
+		{ vec3(20.0, 20.0, 20.0) },// Top Right
 
 
 		//back
-		{ vec3(-10.0f, 10.0f, -10.0f) },// Top Left
-		{ vec3(-10.0f, -10.0f, -10.0f) },// Bottom Left
-		{ vec3(10.0, -10.0f, -10.0f) }, //Bottom Right
-		{ vec3(10.0f, 10.0f, -10.0f) }// Top Right
+		{ vec3(-20.0, 20.0, -20.0) },// Top Left
+		{ vec3(-20.0, -20.0, -20.0) },// Bottom Left
+		{ vec3(20.0, -20.0, -20.0) }, //Bottom Right
+		{ vec3(20.0, 20.0, -20.0) }// Top Right
 	};
 
 
@@ -348,7 +348,7 @@ void Initialise()
 	}
 
 	//1ST 
-	std::string modelPath = ASSET_PATH + MODEL_PATH + "armoredrecon.fbx";
+	/*std::string modelPath = ASSET_PATH + MODEL_PATH + "armoredrecon.fbx";
 	GameObject * go = loadFBXFromFile(modelPath);
 	for (int i = 0; i < go->getChildCount(); i++)
 	{
@@ -369,17 +369,17 @@ void Initialise()
 	}
 	go->getTransform()->setPosition(2.0f, -2.0f, -6.0f);
 	go->getTransform()->setRotation(0.0f, -40.0f, 0.0f);
-	displayList.push_back(go);
+	displayList.push_back(go);*/
 
 	//2ND
-	modelPath = ASSET_PATH + MODEL_PATH + "fighter1.3ds";
-	go = loadFBXFromFile(modelPath);
+	std::string modelPath = ASSET_PATH + MODEL_PATH + "fighter1.3ds";
+	GameObject * go = loadFBXFromFile(modelPath);
 	for (int i = 0; i < go->getChildCount(); i++)
 	{
 		Material * material = new Material();
 		material->init();
-		std::string vsPath = ASSET_PATH + SHADER_PATH + "bumpMappingVS.glsl";
-		std::string fsPath = ASSET_PATH + SHADER_PATH + "bumpMappingFS.glsl";
+		std::string vsPath = ASSET_PATH + SHADER_PATH + "directionalLightTextureVS.glsl";
+		std::string fsPath = ASSET_PATH + SHADER_PATH + "directionalLightTextureFS.glsl";
 		material->loadShader(vsPath, fsPath);
 
 		std::string diffTexturePath = ASSET_PATH + TEXTURE_PATH + "robin.png";
@@ -388,7 +388,7 @@ void Initialise()
 		material->loadSpecularMap(specTexturePath);
 		go->getChild(i)->setMaterial(material);
 	}
-	go->getTransform()->setPosition(0.0f, 2.0f, -6.0f);
+	go->getTransform()->setPosition(2.5f, -1.0f, -6.0f);
 	go->getTransform()->setRotation(30.0f, 45.0f, 0.0f);
 	go->getTransform()->setScale(0.05f, 0.05f, 0.05f);
 	displayList.push_back(go);
@@ -400,21 +400,104 @@ void Initialise()
 	{
 		Material * material = new Material();
 		material->init();
-		std::string vsPath = ASSET_PATH + SHADER_PATH + "bumpMappingVS.glsl";
-		std::string fsPath = ASSET_PATH + SHADER_PATH + "bumpMappingFS.glsl";
+		std::string vsPath = ASSET_PATH + SHADER_PATH + "directionalLightTextureVS.glsl";
+		std::string fsPath = ASSET_PATH + SHADER_PATH + "directionalLightTextureFS.glsl";
 		material->loadShader(vsPath, fsPath);
 
-		std::string diffTexturePath = ASSET_PATH + TEXTURE_PATH + "robin.png";
+		std::string diffTexturePath = ASSET_PATH + TEXTURE_PATH + "kaoskiwi.png";
 		material->loadDiffuseMap(diffTexturePath);
-		std::string specTexturePath = ASSET_PATH + TEXTURE_PATH + "robin.png";
-		material->loadSpecularMap(specTexturePath);
+		//std::string specTexturePath = ASSET_PATH + TEXTURE_PATH + "kaoskiwi.png";
+		//material->loadSpecularMap(specTexturePath);
 		go->getChild(i)->setMaterial(material);
 	}
-	go->getTransform()->setPosition(-5.0f, 2.0f, -6.0f);
+	go->getTransform()->setPosition(0.0f, 2.0f, -6.0f);
 	go->getTransform()->setRotation(30.0f, 45.0f, 0.0f);
 	go->getTransform()->setScale(0.05f, 0.05f, 0.05f);
 	displayList.push_back(go);
 
+	modelPath = ASSET_PATH + MODEL_PATH + "fighter1.3ds";
+	go = loadFBXFromFile(modelPath);
+	for (int i = 0; i < go->getChildCount(); i++)
+	{
+		Material * material = new Material();
+		material->init();
+		std::string vsPath = ASSET_PATH + SHADER_PATH + "directionalLightTextureVS.glsl";
+		std::string fsPath = ASSET_PATH + SHADER_PATH + "directionalLightTextureFS.glsl";
+		material->loadShader(vsPath, fsPath);
+
+		std::string diffTexturePath = ASSET_PATH + TEXTURE_PATH + "cubik.png";
+		material->loadDiffuseMap(diffTexturePath);
+		//std::string specTexturePath = ASSET_PATH + TEXTURE_PATH + "kaoskiwi.png";
+		//material->loadSpecularMap(specTexturePath);
+		go->getChild(i)->setMaterial(material);
+	}
+	go->getTransform()->setPosition(4.0f, 4.0f, -6.0f);
+	go->getTransform()->setRotation(30.0f, 45.0f, 0.0f);
+	go->getTransform()->setScale(0.05f, 0.05f, 0.05f);
+	displayList.push_back(go);
+
+	modelPath = ASSET_PATH + MODEL_PATH + "spaceship01.fbx";
+	go = loadFBXFromFile(modelPath);
+	for (int i = 0; i < go->getChildCount(); i++)
+	{
+		Material * material = new Material();
+		material->init();
+		std::string vsPath = ASSET_PATH + SHADER_PATH + "bumpMappingVS.glsl";
+		std::string fsPath = ASSET_PATH + SHADER_PATH + "bumpMappingFS.glsl";
+		material->loadShader(vsPath, fsPath);
+
+		std::string diffTexturePath = ASSET_PATH + TEXTURE_PATH + "mat_ship.png";
+		material->loadDiffuseMap(diffTexturePath);
+		std::string bumpTexturePath = ASSET_PATH + TEXTURE_PATH + "mat_shipNORMAL.png";
+		material->loadBumpMap(bumpTexturePath);
+		go->getChild(i)->setMaterial(material);
+	}
+	go->getTransform()->setPosition(7.0f, 4.0f, -6.0f);
+	go->getTransform()->setRotation(120.0f, 0.0f, -30.0f);
+	go->getTransform()->setScale(0.01f, 0.01f, 0.01f);
+	displayList.push_back(go);
+
+	modelPath = ASSET_PATH + MODEL_PATH + "gate.fbx";
+	go = loadFBXFromFile(modelPath);
+	for (int i = 0; i < go->getChildCount(); i++)
+	{
+		Material * material = new Material();
+		material->init();
+		std::string vsPath = ASSET_PATH + SHADER_PATH + "bumpMappingVS.glsl";
+		std::string fsPath = ASSET_PATH + SHADER_PATH + "bumpMappingFS.glsl";
+		material->loadShader(vsPath, fsPath);
+
+		std::string diffTexturePath = ASSET_PATH + TEXTURE_PATH + "mat_gate.png";
+		material->loadDiffuseMap(diffTexturePath);
+		std::string bumpTexturePath = ASSET_PATH + TEXTURE_PATH + "mat_gate NORMAL.png";
+		material->loadBumpMap(bumpTexturePath);
+		go->getChild(i)->setMaterial(material);
+	}
+	go->getTransform()->setPosition(9.0f, 4.0f, -6.0f);
+	go->getTransform()->setRotation(0.0f, -80.0f, -10.0f);
+	go->getTransform()->setScale(0.1f, 0.1f, 0.1f);
+	displayList.push_back(go);
+
+	modelPath = ASSET_PATH + MODEL_PATH + "station.fbx";
+	go = loadFBXFromFile(modelPath);
+	for (int i = 0; i < go->getChildCount(); i++)
+	{
+		Material * material = new Material();
+		material->init();
+		std::string vsPath = ASSET_PATH + SHADER_PATH + "bumpMappingVS.glsl";
+		std::string fsPath = ASSET_PATH + SHADER_PATH + "bumpMappingFS.glsl";
+		material->loadShader(vsPath, fsPath);
+
+		std::string diffTexturePath = ASSET_PATH + TEXTURE_PATH + "mat_stat.png";
+		material->loadDiffuseMap(diffTexturePath);
+		std::string bumpTexturePath = ASSET_PATH + TEXTURE_PATH + "mat_stat NORMAL.png";
+		material->loadBumpMap(bumpTexturePath);
+		go->getChild(i)->setMaterial(material);
+	}
+	go->getTransform()->setPosition(-7.0f, 0.0f, -4.0f);
+	go->getTransform()->setRotation(90.0f, 0.0f, 0.0f);
+	go->getTransform()->setScale(0.1f, 0.1f, 0.1f);
+	displayList.push_back(go);
 
 	//LD Add
 	Timer::getTimer().start();
