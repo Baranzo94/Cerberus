@@ -341,13 +341,13 @@ void Initialise()
 	mainLight->setLight(light);
 	displayList.push_back(mainLight);
 
-	
-	//for (auto iter = displayList.begin(); iter != displayList.end(); iter++)
-	//{
-	//(*iter)->init();
-	//}
 
+	for (auto iter = displayList.begin(); iter != displayList.end(); iter++)
+	{
+		(*iter)->init();
+	}
 
+	//1ST 
 	std::string modelPath = ASSET_PATH + MODEL_PATH + "armoredrecon.fbx";
 	GameObject * go = loadFBXFromFile(modelPath);
 	for (int i = 0; i < go->getChildCount(); i++)
@@ -367,9 +367,54 @@ void Initialise()
 
 		go->getChild(i)->setMaterial(material);
 	}
-	go->getTransform()->setPosition(1.0f, -1.0f, -5.0f);
+	go->getTransform()->setPosition(2.0f, -2.0f, -6.0f);
 	go->getTransform()->setRotation(0.0f, -40.0f, 0.0f);
 	displayList.push_back(go);
+
+	//2ND
+	modelPath = ASSET_PATH + MODEL_PATH + "fighter1.3ds";
+	go = loadFBXFromFile(modelPath);
+	for (int i = 0; i < go->getChildCount(); i++)
+	{
+		Material * material = new Material();
+		material->init();
+		std::string vsPath = ASSET_PATH + SHADER_PATH + "bumpMappingVS.glsl";
+		std::string fsPath = ASSET_PATH + SHADER_PATH + "bumpMappingFS.glsl";
+		material->loadShader(vsPath, fsPath);
+
+		std::string diffTexturePath = ASSET_PATH + TEXTURE_PATH + "robin.png";
+		material->loadDiffuseMap(diffTexturePath);
+		std::string specTexturePath = ASSET_PATH + TEXTURE_PATH + "robin.png";
+		material->loadSpecularMap(specTexturePath);
+		go->getChild(i)->setMaterial(material);
+	}
+	go->getTransform()->setPosition(0.0f, 2.0f, -6.0f);
+	go->getTransform()->setRotation(30.0f, 45.0f, 0.0f);
+	go->getTransform()->setScale(0.05f, 0.05f, 0.05f);
+	displayList.push_back(go);
+
+	//3RD
+	modelPath = ASSET_PATH + MODEL_PATH + "fighter1.3ds";
+	go = loadFBXFromFile(modelPath);
+	for (int i = 0; i < go->getChildCount(); i++)
+	{
+		Material * material = new Material();
+		material->init();
+		std::string vsPath = ASSET_PATH + SHADER_PATH + "bumpMappingVS.glsl";
+		std::string fsPath = ASSET_PATH + SHADER_PATH + "bumpMappingFS.glsl";
+		material->loadShader(vsPath, fsPath);
+
+		std::string diffTexturePath = ASSET_PATH + TEXTURE_PATH + "robin.png";
+		material->loadDiffuseMap(diffTexturePath);
+		std::string specTexturePath = ASSET_PATH + TEXTURE_PATH + "robin.png";
+		material->loadSpecularMap(specTexturePath);
+		go->getChild(i)->setMaterial(material);
+	}
+	go->getTransform()->setPosition(-5.0f, 2.0f, -6.0f);
+	go->getTransform()->setRotation(30.0f, 45.0f, 0.0f);
+	go->getTransform()->setScale(0.05f, 0.05f, 0.05f);
+	displayList.push_back(go);
+
 
 	//LD Add
 	Timer::getTimer().start();
