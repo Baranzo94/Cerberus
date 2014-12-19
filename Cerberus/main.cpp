@@ -86,14 +86,10 @@ const int WINDOW_HEIGHT = 480;
 bool running = true;
 
 vec4 ambientLightColour = vec4(1.0f, 1.0f, 1.0f, 1.0f);
-//vec3 lookAt = vec3(1.0f, 1.0f, 1.0f);
 std::vector<GameObject*> displayList;
 GameObject * mainCamera;
 GameObject * mainLight;
 CameraController * controller;
-//CameraController * controller = new CameraController();
-//Timer * timer;
-
 
 void CheckForErrors()
 {
@@ -219,12 +215,6 @@ void Initialise()
 	c->setFOV(45.0f);
 	c->setNearClip(0.1f);
 	c->setFarClip(1000.0f);
-	
-
-	//vec3 rot = t->getRotation();
-	//vec3 lookAt = vec3(0.0f, 0.0f, 0.0f);
-	//c->setLook(lookAt.x, lookAt.y, lookAt.z);
-	
 
 	mainCamera->setCamera(c);
 	//LD In
@@ -246,11 +236,6 @@ void Initialise()
 	mainLight->setLight(light);
 	displayList.push_back(mainLight);
 
-	
-	//for (auto iter = displayList.begin(); iter != displayList.end(); iter++)
-	//{
-	//(*iter)->init();
-	//}
 
 
 	std::string modelPath = ASSET_PATH + MODEL_PATH + "armoredrecon.fbx";
@@ -284,8 +269,6 @@ void Initialise()
 //Updaing the game state.
 void update()
 {
-	//SDL_WarpMouseInWindow(window, (640 / 2), (480 / 2));
-	//Timer::getTimer().update();
 	for (auto iter = displayList.begin(); iter != displayList.end(); iter++)
 	{
 		(*iter)->update();
@@ -428,12 +411,6 @@ int main(int argc, char * arg[])
 	SDL_Event event;
 	//The Game Loop
 	while (running)
-	/*{
-		while (SDL_PollEvent(&event)) {
-			if (event.type == SDL_QUIT || event.type == SDL_WINDOWEVENT_CLOSE) {
-				running = false;
-			}
-		}*/
 
 	{
 		Timer::getTimer().update();
@@ -465,17 +442,6 @@ int main(int argc, char * arg[])
 				Input::getInput().getKeyboard()->setKeyUp(event.key.keysym.sym);
 				break;
 			}
-				/*switch (event.key.keysym.sym){
-					{
-
-				case SDLK_w:
-					controller->moveForward();
-					break;
-				case SDLK_s:
-					controller->moveBackward();
-					break;
-					}
-				}*/
 			
 		case SDL_MOUSEMOTION:
 			{
@@ -487,7 +453,6 @@ int main(int argc, char * arg[])
 
 									//Attempts at capturing the output
 									
-//Input::getInput().getMouse()->setMousePosition(event.motion.x, event.motion.y, event.motion.xrel, event.motion.yrel);
 									if (event.motion.x > Mouse::DeadzoneNeg && event.motion.x < Mouse::DeadzonePos)
 									{
 										Input::getInput().getMouse()->setMousePosition(xID, yID, xRelID, yRelID );
@@ -502,10 +467,6 @@ int main(int argc, char * arg[])
 									else{
 										Input::getInput().getMouse()->setMousePosition(event.motion.x, event.motion.y, event.motion.xrel, event.motion.yrel);
 									}
-									//Input::getInput().getMouse()->setMousePositionX(event.motion.x,event.motion.xrel);
-									//Input::getInput().getMouse()->setMousePositionY(event.motion.y,event.motion.yrel);
-									//InputSystem.getMouse().setMousePosition(event.motion.x, event.motion.y, event.motion.xrel, event.motion.yrel);
-									//controller->mouseMoved();
 									printf("Mouse is moving\n");
 									
 									break; 

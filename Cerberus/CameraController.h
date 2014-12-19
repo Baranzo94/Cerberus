@@ -14,7 +14,7 @@ public:
 	void update();
 
 	void setCamera(Camera * cam);
-	//void setSpeed(float speed);
+	
 	void moveForward();
 	void moveBackward();
 	void camRot();
@@ -27,7 +27,7 @@ private:
 	bool m_MouseMouvement;
 	Camera * m_AttachedCamera;
 
-	//float DeltaTime;
+	
 
 };
 
