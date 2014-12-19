@@ -27,7 +27,6 @@ public:
 
 	void setParent(GameObject * object);
 
-	//LD Added
 	const std::string& getName();
 	GameObject * getParent();
 	void setName(const std::string& name);

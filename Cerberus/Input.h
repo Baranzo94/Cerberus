@@ -45,7 +45,4 @@ private:
 	Mouse *  m_Mouse;
 };
 
-//static Input InputSystem;
-
 #endif
-/*const std::string& inputDBFilename*/

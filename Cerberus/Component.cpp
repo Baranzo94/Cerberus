@@ -2,7 +2,7 @@
 
 #include "Component.h"
 
-Component::Component() // Modified by LD
+Component::Component() 
 {
 	m_Type = "Component";
 	m_Name = "Component";

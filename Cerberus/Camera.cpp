@@ -13,7 +13,6 @@ Camera::Camera()
 	m_AspectRatio = 16.0f / 9.0f;
 	m_View = mat4();
 	m_Projection = mat4();
-	//m_Position = vec3(0.0f, 1.0f, 10.0f);
 }
 
 Camera::~Camera()
@@ -69,7 +68,7 @@ mat4& Camera::getProjection()
 {
 	return m_Projection;
 }
-//LD Added
+
 vec3& Camera::getLookAt()
 {
 	return m_LookAt;

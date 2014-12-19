@@ -40,7 +40,4 @@ private:
 	bool m_Paused;
 	bool m_Started;
 };
-
-//static Timer Time;
-
 #endif

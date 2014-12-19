@@ -2,7 +2,6 @@
 // Team Cerberus
 // Christopher Kinney, Liam Dick, Chinglong Law
 //
-// Framework made by Christopher Kinney. Authors of additional methods and classes will comment their name next to it.
 
 
 
@@ -66,11 +65,9 @@ const std::string MODEL_PATH = "models/";
 #include "Camera.h"
 #include "Light.h"
 #include "FBXLoader.h"
-//LD Added Inputs
 #include "CameraController.h"
 #include "Input.h"
 #include "Timer.h"
-//Claw Added Input
 #include "CubeMapMaterial.h"
 
 
@@ -88,13 +85,10 @@ const int WINDOW_HEIGHT = 960;
 bool running = true;
 
 vec4 ambientLightColour = vec4(1.0f, 1.0f, 1.0f, 1.0f);
-//vec3 lookAt = vec3(1.0f, 1.0f, 1.0f);
 std::vector<GameObject*> displayList;
 GameObject * mainCamera;
 GameObject * mainLight;
 CameraController * controller;
-//CameraController * controller = new CameraController();
-//Timer * timer;
 GameObject * skyBox = NULL;
 
 
@@ -305,7 +299,7 @@ void Initialise()
 	mainCamera->setName("MainCamera");
 
 	Transform *t = new Transform();
-	t->setPosition(0.0f, 0.0f, 7.0f);
+	t->setPosition(0.0f, 0.0f, 8.0f);
 	t->setRotation(0.0f, -glm::radians(180.0f), 0.0f);
 	mainCamera->setTransform(t);
 
@@ -314,22 +308,14 @@ void Initialise()
 	c->setFOV(45.0f);
 	c->setNearClip(0.1f);
 	c->setFarClip(1000.0f);
-	
-
-	//vec3 rot = t->getRotation();
-	//vec3 lookAt = vec3(0.0f, 0.0f, 0.0f);
-	//c->setLook(lookAt.x, lookAt.y, lookAt.z);
-	
 
 	mainCamera->setCamera(c);
-	//LD In
 	controller = new CameraController();
 	controller->setCamera(c);
 
 	mainCamera->addComponent(controller);
 
 	displayList.push_back(mainCamera);
-	//
 	mainLight = new GameObject();
 	mainLight->setName("MainLight");
 
@@ -347,31 +333,8 @@ void Initialise()
 		(*iter)->init();
 	}
 
-	//1ST 
-	/*std::string modelPath = ASSET_PATH + MODEL_PATH + "armoredrecon.fbx";
-	GameObject * go = loadFBXFromFile(modelPath);
-	for (int i = 0; i < go->getChildCount(); i++)
-	{
-		Material * material = new Material();
-		material->init();
-		std::string vsPath = ASSET_PATH + SHADER_PATH + "bumpMappingVS.glsl";
-		std::string fsPath = ASSET_PATH + SHADER_PATH + "bumpMappingFS.glsl";
-		material->loadShader(vsPath, fsPath);
+	//Loading the models and and textures.
 
-		std::string diffTexturePath = ASSET_PATH + TEXTURE_PATH + "armoredrecon_diff.png";
-		material->loadDiffuseMap(diffTexturePath);
-		std::string specTexturePath = ASSET_PATH + TEXTURE_PATH + "armoredrecon_spec.png";
-		material->loadSpecularMap(specTexturePath);
-		std::string bumpTexturePath = ASSET_PATH + TEXTURE_PATH + "armoredrecon_N.png";
-		material->loadBumpMap(bumpTexturePath);
-
-		go->getChild(i)->setMaterial(material);
-	}
-	go->getTransform()->setPosition(2.0f, -2.0f, -6.0f);
-	go->getTransform()->setRotation(0.0f, -40.0f, 0.0f);
-	displayList.push_back(go);*/
-
-	//2ND
 	std::string modelPath = ASSET_PATH + MODEL_PATH + "fighter1.3ds";
 	GameObject * go = loadFBXFromFile(modelPath);
 	for (int i = 0; i < go->getChildCount(); i++)
@@ -393,7 +356,6 @@ void Initialise()
 	go->getTransform()->setScale(0.05f, 0.05f, 0.05f);
 	displayList.push_back(go);
 
-	//3RD
 	modelPath = ASSET_PATH + MODEL_PATH + "fighter1.3ds";
 	go = loadFBXFromFile(modelPath);
 	for (int i = 0; i < go->getChildCount(); i++)
@@ -406,8 +368,6 @@ void Initialise()
 
 		std::string diffTexturePath = ASSET_PATH + TEXTURE_PATH + "kaoskiwi.png";
 		material->loadDiffuseMap(diffTexturePath);
-		//std::string specTexturePath = ASSET_PATH + TEXTURE_PATH + "kaoskiwi.png";
-		//material->loadSpecularMap(specTexturePath);
 		go->getChild(i)->setMaterial(material);
 	}
 	go->getTransform()->setPosition(0.0f, 2.0f, -6.0f);
@@ -427,8 +387,6 @@ void Initialise()
 
 		std::string diffTexturePath = ASSET_PATH + TEXTURE_PATH + "cubik.png";
 		material->loadDiffuseMap(diffTexturePath);
-		//std::string specTexturePath = ASSET_PATH + TEXTURE_PATH + "kaoskiwi.png";
-		//material->loadSpecularMap(specTexturePath);
 		go->getChild(i)->setMaterial(material);
 	}
 	go->getTransform()->setPosition(4.0f, 4.0f, -6.0f);
@@ -453,6 +411,27 @@ void Initialise()
 		go->getChild(i)->setMaterial(material);
 	}
 	go->getTransform()->setPosition(7.0f, 4.0f, -6.0f);
+	go->getTransform()->setRotation(120.0f, 0.0f, -30.0f);
+	go->getTransform()->setScale(0.01f, 0.01f, 0.01f);
+	displayList.push_back(go);
+
+	modelPath = ASSET_PATH + MODEL_PATH + "spaceship01.fbx";
+	go = loadFBXFromFile(modelPath);
+	for (int i = 0; i < go->getChildCount(); i++)
+	{
+		Material * material = new Material();
+		material->init();
+		std::string vsPath = ASSET_PATH + SHADER_PATH + "bumpMappingVS.glsl";
+		std::string fsPath = ASSET_PATH + SHADER_PATH + "bumpMappingFS.glsl";
+		material->loadShader(vsPath, fsPath);
+
+		std::string diffTexturePath = ASSET_PATH + TEXTURE_PATH + "mat_ship.png";
+		material->loadDiffuseMap(diffTexturePath);
+		std::string bumpTexturePath = ASSET_PATH + TEXTURE_PATH + "mat_shipNORMAL.png";
+		material->loadBumpMap(bumpTexturePath);
+		go->getChild(i)->setMaterial(material);
+	}
+	go->getTransform()->setPosition(4.0f, -2.0f, 4.0f);
 	go->getTransform()->setRotation(120.0f, 0.0f, -30.0f);
 	go->getTransform()->setScale(0.01f, 0.01f, 0.01f);
 	displayList.push_back(go);
@@ -499,7 +478,6 @@ void Initialise()
 	go->getTransform()->setScale(0.1f, 0.1f, 0.1f);
 	displayList.push_back(go);
 
-	//LD Add
 	Timer::getTimer().start();
 }
 
@@ -509,8 +487,6 @@ void update()
 {
 	skyBox->update();
 
-	//SDL_WarpMouseInWindow(window, (640 / 2), (480 / 2));
-	//Timer::getTimer().update();
 	for (auto iter = displayList.begin(); iter != displayList.end(); iter++)
 	{
 		(*iter)->update();
@@ -677,31 +653,17 @@ int main(int argc, char * arg[])
 	CheckForErrors();
 
 	setViewport(WINDOW_WIDTH, WINDOW_HEIGHT);
-	//LD in
-	//initInput();
-	//
 	initInput();
 	Initialise();
 
 	SDL_Event event;
 	//The Game Loop
 	while (running)
-	/*{
-		while (SDL_PollEvent(&event)) {
-			if (event.type == SDL_QUIT || event.type == SDL_WINDOWEVENT_CLOSE) {
-				running = false;
-			}
-		}*/
 
 	{
 		Timer::getTimer().update();
 		//While we still have events in the queue
 		while (SDL_PollEvent(&event)) {
-			//Get event type
-			//if (event.type == SDL_QUIT || event.type == SDL_WINDOWEVENT_CLOSE) {
-			//set our boolean which controls the loop to false
-			//    running = false;
-			//}
 			switch (event.type)
 			{
 			case SDL_QUIT:
@@ -720,7 +682,6 @@ int main(int argc, char * arg[])
 								}
 								else{
 									Input::getInput().getKeyboard()->setKeyDown(event.key.keysym.sym);
-									printf("keydown\n");
 								}
 				break;
 			}
@@ -730,17 +691,6 @@ int main(int argc, char * arg[])
 				Input::getInput().getKeyboard()->setKeyUp(event.key.keysym.sym);
 				break;
 			}
-				/*switch (event.key.keysym.sym){
-					{
-
-				case SDLK_w:
-					controller->moveForward();
-					break;
-				case SDLK_s:
-					controller->moveBackward();
-					break;
-					}
-				}*/
 			
 		case SDL_MOUSEMOTION:
 			{
@@ -749,10 +699,6 @@ int main(int argc, char * arg[])
 									int yID = 0;
 									int yRelID = 0;
 				
-
-									//Attempts at capturing the output
-									
-//Input::getInput().getMouse()->setMousePosition(event.motion.x, event.motion.y, event.motion.xrel, event.motion.yrel);
 									if (event.motion.x > Mouse::DeadzoneNeg && event.motion.x < Mouse::DeadzonePos)
 									{
 										Input::getInput().getMouse()->setMousePosition(xID, yID, xRelID, yRelID );
@@ -767,15 +713,8 @@ int main(int argc, char * arg[])
 									else{
 										Input::getInput().getMouse()->setMousePosition(event.motion.x, event.motion.y, event.motion.xrel, event.motion.yrel);
 									}
-									//Input::getInput().getMouse()->setMousePositionX(event.motion.x,event.motion.xrel);
-									//Input::getInput().getMouse()->setMousePositionY(event.motion.y,event.motion.yrel);
-									//InputSystem.getMouse().setMousePosition(event.motion.x, event.motion.y, event.motion.xrel, event.motion.yrel);
-									//controller->mouseMoved();
-									printf("Mouse is moving\n");
-									
-									break; 
-
-									
+																	
+									break;		
 			}
 			}
 		}

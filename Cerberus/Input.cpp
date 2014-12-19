@@ -38,10 +38,6 @@ bool Input::init()
 {
 	m_Keyboard = new Keyboard();
 	m_Mouse = new Mouse();
-	//SDL_GameControllerAddMappingsFromFile(inputDBFilename.c_str());
 
 	return true;
 }
-
-//to be put in or removed from last function
-/*const std::string& inputDBFilename*/
